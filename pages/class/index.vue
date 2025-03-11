@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import ClassBannerImg from '~/assets/images/class.jpg'
+
+useHead({
+  title: 'Kelas',
+})
 </script>
 <template>
   <section class="flex flex-col gap-4">

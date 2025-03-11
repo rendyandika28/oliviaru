@@ -1,0 +1,213 @@
+{
+  "status": "OK",
+  "statusCode": 200,
+  "data": {
+    "classes": [
+      {
+        "title": "Kelas Nastar Karakter",
+        "description": "<h1>Kelas Nastar Karakter 🍍✨</h1>\n<p>Belajar membuat nastar unik dan menggemaskan dengan karakter-karakter lucu di <strong>Kelas Nastar Karakter</strong>! Di kelas ini, Anda akan diajarkan teknik membuat nastar dengan bentuk yang menarik, mulai dari dasar hingga dekorasi detail agar tampilan nastar semakin cantik dan profesional.<br/><br/></p>\n<h2>📌 Apa yang akan Anda pelajari?</h2>\n<ul>\n<li>✅ Resep nastar lembut dan lumer di mulut</li>\n<li>✅ Teknik membentuk dan mencetak karakter dengan sempurna</li>\n<li>✅ Tips pewarnaan dan dekorasi agar nastar terlihat menarik</li>\n<li>✅ Cara memanggang yang tepat agar hasilnya matang merata</li>\n</ul>\n<h2>💡 Untuk siapa kelas ini?</h2>\n<ul>\n<li>✅ Pemula yang ingin belajar membuat nastar dari nol</li>\n<li>✅ Pelaku usaha kuliner yang ingin menambah variasi jualan</li>\n<li>✅ Siapa saja yang ingin menyalurkan kreativitas melalui baking</li>\n</ul>\n<p><strong>Gabung sekarang dan ciptakan nastar karakter yang unik dan menarik! 🎨🍪</strong></p>",
+        "thumbnailUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/oliviaru-development/classes/8be15f88/thumbnails/class_thumbnail.jpg",
+        "status": "ARCHIVED",
+        "slug": "kelas-nastar-karakter",
+        "subClasses": [
+          {
+            "title": "Informasi Suhu Oven",
+            "slug": "informasi-suhu-oven",
+            "description": "Kelas video online 'Informasi Suhu Oven' ini membahas pentingnya memahami dan mengatur suhu oven dengan tepat untuk menghasilkan masakan dan kue yang sempurna.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/informasi-suhu-oven/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Adonan Nastar Premium Versi 1",
+            "slug": "tutorial-adonan-nastar-premium",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-adonan-nastar-premium/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Adonan Nastar Premium Versi 2",
+            "slug": "tutorial-adonan-nastar-premium-b",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-adonan-nastar-premium-b/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Black Nastar",
+            "slug": "tutorial-black-nastar",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-black-nastar/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Alpukat",
+            "slug": "tutorial-nastar-alpukat",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-alpukat/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Basic",
+            "slug": "tutorial-nastar-basic",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-basic/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Bentuk Buah Nanas",
+            "slug": "tutorial-nastar-bentuk-buah-nanas",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-bentuk-buah-nanas/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Beruang",
+            "slug": "tutorial-nastar-beruang",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-beruang/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Burger",
+            "slug": "tutorial-nastar-burger",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-burger/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar CARS",
+            "slug": "tutorial-nastar-cars",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-cars/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Doraemon",
+            "slug": "tutorial-nastar-doraemon",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-doraemon/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Doughy",
+            "slug": "tutorial-nastar-doughy",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-doughy/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Helokiti",
+            "slug": "tutorial-nastar-helokiti",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-helokiti/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Jeruk",
+            "slug": "tutorial-nastar-jeruk",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-jeruk/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Keropi",
+            "slug": "tutorial-nastar-keropi",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-keropi/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Kumbang",
+            "slug": "tutorial-nastar-kumbang",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-kumbang/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Labu",
+            "slug": "tutorial-nastar-labu",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-labu/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Landak",
+            "slug": "tutorial-nastar-landak",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-landak/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Lebah",
+            "slug": "tutorial-nastar-lebah",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-lebah/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Nanas Kupas",
+            "slug": "tutorial-nastar-nanas-kupas",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-nanas-kupas/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Original Daun",
+            "slug": "tutorial-nastar-original-daun",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-original-daun/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Piggy",
+            "slug": "tutorial-nastar-piggy",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-piggy/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Strawberry",
+            "slug": "tutorial-nastar-stroberi",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-stroberi/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Terong",
+            "slug": "tutorial-nastar-terong",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-terong/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Nastar Wortel",
+            "slug": "tutorial-nastar-wortel",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-nastar-wortel/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Onde Pelangi",
+            "slug": "tutorial-onde-pelangi",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-onde-pelangi/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Selai Nanas Premium",
+            "slug": "tutorial-selai-nanas-premium",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/tutorial-selai-nanas-premium/output.m3u8",
+            "thumbnailUrl": null
+          },
+          {
+            "title": "Tutorial Selai Nanas Premium 2",
+            "slug": "tutorial-selai-nanas-premium-2",
+            "description": "Kelas video online 'Tutorial Adonan Nastar Premium' ini akan membimbing Anda langkah demi langkah dalam membuat adonan nastar yang lembut, lumer, dan berkualitas premium.",
+            "videoUrl": "https://minio-w4g4o4s4wok84k8cko8o0so8.rdydika.site/dummy-oliviaru-development/video/kelas-nastar-karakter/Informasi Suhu Oven.mp4",
+            "thumbnailUrl": null
+          }
+        ]
+      }
+    ]
+  }
+}

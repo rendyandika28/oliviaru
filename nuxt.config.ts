@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/google-fonts',
+    '@sidebase/nuxt-auth',
   ],
   postcss: {
     plugins: {
@@ -31,4 +32,17 @@ export default defineNuxtConfig({
       redirect: '/internal/dashboard'
     }
   },
+  runtimeConfig: {
+    authSecretKey: process.env.NUXT_AUTH_SECRET_KEY || '',
+    googleClientID: process.env.NUXT_GOOGLE_CLIENT_ID || '',
+    googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET || '',
+  },
+  auth: {
+    provider: {
+      type: 'authjs',
+      trustHost: false,
+      defaultProvider: 'google',
+      addDefaultCallbackUrl: true
+    }
+  }
 })

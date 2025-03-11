@@ -1,10 +1,24 @@
 <script setup lang="ts">
+const { application: { title } } = useAppConfig()
 definePageMeta({
   layout: false
 })
+
 useHead({
-  title: 'Home'
+  title: `Halaman utama • ${title}`
 })
+
+
+const { status } = useAuth()
+const router = useRouter()
+
+const handleRedirectUser = () => {
+  if (status.value === 'unauthenticated') {
+    router.push('/auth/login')
+  } else {
+    router.push('/class')
+  }
+}
 </script>
 <template>
   <section>
@@ -27,7 +41,8 @@ useHead({
           </p-heading>
           <p-text>Mulai perjalanan baking Anda hari ini, daftar sekarang
             dan pelajari semua kue kesukaanmu!</p-text>
-          <p-button href="/auth/login" variant="outline" class="w-fit mt-8 !text-base-white">Mulai Belajar
+          <p-button @click="handleRedirectUser" href="/auth/login" variant="outline"
+            class="w-fit mt-8 !text-base-white">Mulai Belajar
             Sekarang</p-button>
         </div>
       </div>

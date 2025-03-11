@@ -65,19 +65,7 @@ const menu = defineMenu([
           </p-breadcrumb>
         </div>
       </div>
-      <p-dropdown no-caret>
-        <template #activator="{ open }">
-          <p-button variant="ghost" size="sm" @click="open" class="flex flex-row items-center gap-2"
-            :class="{ 'hidden': model }">
-            <p-avatar src="https://picsum.photos/id/40/40" />
-            <div class="text-left flex flex-col">
-              <p-text variant="formlabel">Rendy Andika</p-text>
-              <p-caption class="text-alpha-black-50">Super Admin</p-caption>
-            </div>
-          </p-button>
-        </template>
-        <p-dropdown-item class="flex flex-row gap-2 items-center text-danger"><pi-sign-out-16 />Logout</p-dropdown-item>
-      </p-dropdown>
+      <Profile />
     </div>
     <slot />
   </p-page>
