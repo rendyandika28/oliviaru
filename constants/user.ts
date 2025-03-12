@@ -16,6 +16,6 @@ export const USER_STATUS = [
   },
   {
     text: 'PENDING',
-    value: 'PENDINGN'
+    value: 'PENDING'
   },
 ]

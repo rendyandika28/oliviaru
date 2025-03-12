@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toast } from '@privyid/persona/core';
+import { useApiUser } from '~/composables/api/useApiUser';
 import { ROLES, USER_STATUS } from '~/constants/user';
 
 const fields = reactive<{ accessorKey: string, text: string }[]>([
@@ -24,22 +26,32 @@ const fields = reactive<{ accessorKey: string, text: string }[]>([
   },
 ])
 
-const items = ref([
-  {
-    image: 'https://picsum.photos/id/50/50',
-    name: 'Rendy Andika',
-    email: 'rendyndika@gmail.com',
-    status: 'REGISTERED',
-    role: 'SUPER_ADMIN'
-  },
-  {
-    image: 'https://picsum.photos/id/50/50',
-    name: 'Nurul Amaliah',
-    email: 'nurulamaliahh@gmail.com',
-    status: 'REGISTERED',
-    role: 'USER'
-  },
-])
+const searchQueryRef = shallowRef('')
+const searchQuery = refDebounced(searchQueryRef, 400)
+
+const { getAll, onUserPatchData } = useApiUser()
+const queryParams = ref({
+  searchQuery,
+  page: 1,
+  limit: 1000,
+})
+
+const { data, status } = await getAll(queryParams)
+
+const handleUserPatchData = (value: Ref<string>, userId: string, type: 'ROLE' | 'STATUS') => {
+  const body: Partial<{ role: string; status: string }> = {};
+  if (type === "ROLE") {
+    body.role = value.value;
+  } else if (type === "STATUS") {
+    body.status = value.value;
+  }
+
+  onUserPatchData(userId, body, {
+    onSuccess: res => {
+      toast(res.body.message)
+    }
+  })
+}
 </script>
 <template>
   <section class="px-4 lg:px-8 space-y-4 max-sm:my-8">
@@ -49,23 +61,25 @@ const items = ref([
     </div>
 
     <custom-table title="Daftar user" sub-title="Data dibawah merupakan daftar user yang telah terdaftar di website"
-      :fields="fields" :items="items">
+      :fields="fields" :items="data?.data">
       <template #search>
-        <p-input class="w-full" placeholder="Cari user dengan nama atau email">
+        <p-input class="w-full" placeholder="Cari user dengan nama atau email" v-model="searchQueryRef">
           <template #append>
-            <pi-search20 />
+            <p-spinner v-if="status === 'pending'" />
+            <pi-search20 v-else />
           </template>
         </p-input>
       </template>
-
-      <template #cell(image)="{ item }">
-        <p-avatar :src="item.image" />
+      <template #cell(image)="{ item: user }">
+        <img :src="user?.image" :alt="user?.name" referrerPolicy="no-referrer" class="size-10 rounded-full" />
       </template>
-      <template #cell(role)="{ item }">
-        <p-select :options="ROLES" v-model="item.role"/>
+      <template #cell(role)="{ item: user }">
+        <p-select @change="value => handleUserPatchData(value as string, user.id, 'ROLE')" :options="ROLES"
+          v-model="user.role" />
       </template>
-      <template #cell(status)="{ item }">
-        <p-select :options="USER_STATUS" v-model="item.status"/>
+      <template #cell(status)="{ item: user }">
+        <p-select @change="value => handleUserPatchData(value as string, user.id, 'STATUS')" :options="USER_STATUS"
+          v-model="user.userStatus" />
       </template>
     </custom-table>
   </section>

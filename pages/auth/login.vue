@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toast } from '@privyid/persona/core'
+
 definePageMeta({
   layout: false,
   auth: {
@@ -11,6 +13,20 @@ const { application: { title } } = useAppConfig()
 useHead({
   title: `Masuk • ${title}`
 })
+
+const { query } = useRoute()
+
+const errorMessages = {
+  userUnauthorized: 'Masuk terlebih dulu sebelum mengakses kelas',
+  newUserPending: 'Akun anda akan didaftarkan terlebih dahulu, silahkan hubungi admin',
+  userPending: 'Status akun anda masih PENDING, silahkan hubungi admin'
+};
+
+const errorMessage = query?.error ? errorMessages[query.error] : null;
+
+if (errorMessage) {
+  toast(errorMessage);
+}
 
 const { signIn } = useAuth()
 </script>

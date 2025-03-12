@@ -54,7 +54,7 @@ const menu = defineMenu([
             </template>
           </p-checkbox>
         </div>
-        <div class="px-4 hidden lg:block">
+        <!-- <div class="px-4 hidden lg:block">
           <p-breadcrumb>
             <p-breadcrumb-item href="#dashboard">
               Dashboard
@@ -63,7 +63,7 @@ const menu = defineMenu([
               User Profile
             </p-breadcrumb-item>
           </p-breadcrumb>
-        </div>
+        </div> -->
       </div>
       <Profile />
     </div>

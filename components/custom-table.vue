@@ -72,7 +72,7 @@ const perPageOptions = ref([5, 10, 15])
   }
 
   &-content {
-    @apply relative flex flex-col w-full h-full overflow-scroll bg-base-white border rounded-lg bg-clip-border;
+    @apply relative flex flex-col size-full overflow-scroll bg-base-white border rounded-lg bg-clip-border;
 
     table {
       @apply w-full text-left table-auto min-w-max;
@@ -81,6 +81,19 @@ const perPageOptions = ref([5, 10, 15])
         th {
           @apply p-4 border-b
         }
+      }
+
+      tbody {
+        tr {
+          td {
+            @apply p-4 py-5 whitespace-nowrap;
+          }
+        }
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        @apply sticky left-0 bg-base-white shadow-md z-10; // Sticky first column
       }
     }
   }
