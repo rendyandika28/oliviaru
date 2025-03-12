@@ -38,7 +38,7 @@ const queryParams = ref({
 
 const { data, status } = await getAll(queryParams)
 
-const handleUserPatchData = (value: any, userId: string, type: 'ROLE' | 'STATUS') => {
+const handleUserPatchData = (value: Ref<string>, userId: string, type: 'ROLE' | 'STATUS') => {
   const body: Partial<{ role: string; status: string }> = {};
   if (type === "ROLE") {
     body.role = value.value;
@@ -56,13 +56,14 @@ const handleUserPatchData = (value: any, userId: string, type: 'ROLE' | 'STATUS'
 <template>
   <section class="px-4 lg:px-8 space-y-4 max-sm:my-8">
     <div class="mb-8">
-      <p-heading element="h5">User Management</p-heading>
+      <p-heading element="h5">Class Management</p-heading>
       <hr class="w-14 border-t-4 border-base-black mt-2" />
     </div>
-    <custom-table title="Daftar user" sub-title="Data dibawah merupakan daftar user yang telah terdaftar di website"
-      :fields="fields" :items="data?.data">
+
+    <custom-table title="Daftar kelas" sub-title="Data dibawah merupakan daftar kelas yang telah terdaftar di website"
+      :fields="fields" :items="[]">
       <template #search>
-        <p-input class="w-full" placeholder="Cari user dengan nama atau email" v-model="searchQueryRef">
+        <p-input class="w-full" placeholder="Cari kelas" v-model="searchQueryRef">
           <template #append>
             <p-spinner v-if="status === 'pending'" />
             <pi-search20 v-else />
@@ -73,21 +74,30 @@ const handleUserPatchData = (value: any, userId: string, type: 'ROLE' | 'STATUS'
         <img :src="user?.image" :alt="user?.name" referrerPolicy="no-referrer" class="size-10 rounded-full" />
       </template>
       <template #cell(role)="{ item: user }">
-        <p-select @change="value => handleUserPatchData(value, user.id, 'ROLE')" :options="ROLES"
+        <p-select @change="value => handleUserPatchData(value as string, user.id, 'ROLE')" :options="ROLES"
           v-model="user.role" />
       </template>
       <template #cell(status)="{ item: user }">
-        <p-select @change="value => handleUserPatchData(value, user.id, 'STATUS')" :options="USER_STATUS"
+        <p-select @change="value => handleUserPatchData(value as string, user.id, 'STATUS')" :options="USER_STATUS"
           v-model="user.userStatus" />
       </template>
     </custom-table>
   </section>
 </template>
 <style lang="scss">
-.table-content table {
-  th:nth-child(2),
-  td:nth-child(2) {
-    @apply sticky left-0 bg-base-white shadow-md z-10; // Sticky first column
+.table {
+  @apply w-full rounded border;
+
+  table {
+    @apply w-full;
+
+    tr {
+      @apply text-left
+    }
+
+    td, th {
+      @apply p-4
+    }
   }
 }
 </style>

@@ -52,6 +52,9 @@ const perPageOptions = ref([5, 10, 15])
             </slot>
           </td>
         </tr>
+        <tr v-if="!items.length">
+          <td :colspan="fields.length" class="text-center py-10">Tidak ada data tersedia</td>
+        </tr>
       </tbody>
     </table>
 
@@ -89,11 +92,6 @@ const perPageOptions = ref([5, 10, 15])
             @apply p-4 py-5 whitespace-nowrap;
           }
         }
-      }
-
-      th:nth-child(2),
-      td:nth-child(2) {
-        @apply sticky left-0 bg-base-white shadow-md z-10; // Sticky first column
       }
     }
   }

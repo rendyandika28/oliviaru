@@ -1,7 +1,8 @@
 <script setup>
 import IconDashboard from '@privyid/persona-icon/vue/dashboard/20.vue'
-import IconDocument from '@privyid/persona-icon/vue/document-filled/20.vue'
+import PiUserGroups20 from '@privyid/persona-icon/vue/user-groups/20.vue'
 import IconMenu from '@privyid/persona-icon/vue/menu-burger/20.vue'
+import PiBlog20 from '@privyid/persona-icon/vue/blog/20.vue'
 import { defineMenu } from '@privyid/persona/core'
 const { application: { title } } = useAppConfig()
 
@@ -26,7 +27,13 @@ const menu = defineMenu([
         name: 'user-management',
         label: 'User Management',
         url: '/internal/user-management',
-        icon: IconDocument
+        icon: PiUserGroups20
+      },
+      {
+        name: 'class-management',
+        label: 'Class Management',
+        url: '/internal/class-management',
+        icon: PiBlog20
       },
     ]
   }
