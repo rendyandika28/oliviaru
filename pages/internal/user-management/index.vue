@@ -26,9 +26,7 @@ const fields = reactive<{ accessorKey: string, text: string }[]>([
   },
 ])
 
-const searchQueryRef = shallowRef('')
-const searchQuery = refDebounced(searchQueryRef, 400)
-
+const searchQuery = ref<string>('')
 const { getAll, onUserPatchData } = useApiUser()
 const queryParams = ref({
   searchQuery,
@@ -59,16 +57,8 @@ const handleUserPatchData = (value: any, userId: string, type: 'ROLE' | 'STATUS'
       <p-heading element="h5">User Management</p-heading>
       <hr class="w-14 border-t-4 border-base-black mt-2" />
     </div>
-    <custom-table title="Daftar user" sub-title="Data dibawah merupakan daftar user yang telah terdaftar di website"
+    <custom-table v-model:search-query="searchQuery" search-placeholder="Cari user dengan nama atau email" :status="status" title="Daftar user" sub-title="Data dibawah merupakan daftar user yang telah terdaftar di website"
       :fields="fields" :items="data?.data">
-      <template #search>
-        <p-input class="w-full" placeholder="Cari user dengan nama atau email" v-model="searchQueryRef">
-          <template #append>
-            <p-spinner v-if="status === 'pending'" />
-            <pi-search20 v-else />
-          </template>
-        </p-input>
-      </template>
       <template #cell(image)="{ item: user }">
         <img :src="user?.image" :alt="user?.name" referrerPolicy="no-referrer" class="size-10 rounded-full" />
       </template>

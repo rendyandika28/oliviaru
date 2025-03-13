@@ -16,12 +16,27 @@ defineProps({
     type: String,
     default: ''
   },
+  status: {
+    type: String,
+    default: ''
+  },
+  searchPlaceholder: {
+    type: String,
+    default: ''
+  },
+  addDataUrl: {
+    type: String,
+    default: ''
+  }
 })
 
-const model = ref(1)
-const total = ref(50)
-const perPage = ref(10)
-const perPageOptions = ref([5, 10, 15])
+const searchQueryModel = defineModel('searchQuery')
+const searchQueryRef = shallowRef('')
+const searchQuery = refDebounced(searchQueryRef, 400)
+
+watch(searchQuery, value => {
+  searchQueryModel.value = value
+})
 </script>
 <template>
   <div class="table-header">
@@ -30,7 +45,13 @@ const perPageOptions = ref([5, 10, 15])
       <p-subheading v-if="subTitle" size="sm">{{ subTitle }}</p-subheading>
     </div>
     <div class="table-header__search">
-      <slot name="search" />
+      <p-input class="w-full" :placeholder="searchPlaceholder" v-model="searchQueryRef">
+        <template #append>
+          <p-spinner v-if="status === 'pending'" />
+          <pi-search20 v-else />
+        </template>
+      </p-input>
+      <p-button v-if="addDataUrl !== ''" v-p-tooltip title="Tambah Data" color="default" :href="addDataUrl" icon><pi-add-plus20 /></p-button>
     </div>
   </div>
 
@@ -70,7 +91,7 @@ const perPageOptions = ref([5, 10, 15])
     @apply w-full flex flex-col items-start lg:flex-row lg:justify-between lg:items-center gap-4 lg:gap-10;
 
     &__search {
-      @apply w-full lg:w-1/3;
+      @apply w-full lg:w-1/3 flex flex-row gap-2;
     }
   }
 

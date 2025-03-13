@@ -26,9 +26,7 @@ const fields = reactive<{ accessorKey: string, text: string }[]>([
   },
 ])
 
-const searchQueryRef = shallowRef('')
-const searchQuery = refDebounced(searchQueryRef, 400)
-
+const searchQuery = ref<string>('')
 const { getAll, onUserPatchData } = useApiUser()
 const queryParams = ref({
   searchQuery,
@@ -38,7 +36,7 @@ const queryParams = ref({
 
 const { data, status } = await getAll(queryParams)
 
-const handleUserPatchData = (value: Ref<string>, userId: string, type: 'ROLE' | 'STATUS') => {
+const handleUserPatchData = (value: any, userId: string, type: 'ROLE' | 'STATUS') => {
   const body: Partial<{ role: string; status: string }> = {};
   if (type === "ROLE") {
     body.role = value.value;
@@ -60,25 +58,17 @@ const handleUserPatchData = (value: Ref<string>, userId: string, type: 'ROLE' | 
       <hr class="w-14 border-t-4 border-base-black mt-2" />
     </div>
 
-    <custom-table title="Daftar kelas" sub-title="Data dibawah merupakan daftar kelas yang telah terdaftar di website"
+    <custom-table v-model:search-query="searchQuery" search-placeholder="Cari kelas" add-data-url="/internal/class-management/add" title="Daftar kelas" sub-title="Data dibawah merupakan daftar kelas yang telah terdaftar di website"
       :fields="fields" :items="[]">
-      <template #search>
-        <p-input class="w-full" placeholder="Cari kelas" v-model="searchQueryRef">
-          <template #append>
-            <p-spinner v-if="status === 'pending'" />
-            <pi-search20 v-else />
-          </template>
-        </p-input>
-      </template>
       <template #cell(image)="{ item: user }">
         <img :src="user?.image" :alt="user?.name" referrerPolicy="no-referrer" class="size-10 rounded-full" />
       </template>
       <template #cell(role)="{ item: user }">
-        <p-select @change="value => handleUserPatchData(value as string, user.id, 'ROLE')" :options="ROLES"
+        <p-select @change="value => handleUserPatchData(value, user.id, 'ROLE')" :options="ROLES"
           v-model="user.role" />
       </template>
       <template #cell(status)="{ item: user }">
-        <p-select @change="value => handleUserPatchData(value as string, user.id, 'STATUS')" :options="USER_STATUS"
+        <p-select @change="value => handleUserPatchData(value, user.id, 'STATUS')" :options="USER_STATUS"
           v-model="user.userStatus" />
       </template>
     </custom-table>
