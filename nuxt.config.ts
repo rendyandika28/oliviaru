@@ -50,6 +50,13 @@ export default defineNuxtConfig({
     authSecretKey: process.env.NUXT_AUTH_SECRET_KEY || '',
     googleClientID: process.env.NUXT_GOOGLE_CLIENT_ID || '',
     googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET || '',
+    minioEndpoint: process.env.NUXT_MINIO_ENDPOINT || '',
+    minioBaseUrl: process.env.NUXT_MINIO_BASE_URL || '',
+    minioSSL: process.env.NUXT_MINIO_SSL || '',
+    minioAccessKey: process.env.NUXT_MINIO_ACCESS_KEY || '',
+    minioSecretKey: process.env.NUXT_MINIO_SECRET_KEY || '',
+    minioBucket: process.env.NUXT_MINIO_BUCKET || '',
+    minioRegion: process.env.NUXT_MINIO_REGION || '',
   },
   auth: {
     provider: {

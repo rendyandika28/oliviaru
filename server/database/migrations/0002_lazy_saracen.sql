@@ -1,0 +1,1 @@
+ALTER TABLE `sub_class` ADD CONSTRAINT `sub_class_class_id_class_id_fk` FOREIGN KEY (`class_id`) REFERENCES `class`(`id`) ON DELETE cascade ON UPDATE no action;
