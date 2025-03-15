@@ -41,7 +41,7 @@ const handleRedirectUser = () => {
           </p-heading>
           <p-text>Mulai perjalanan baking Anda hari ini, daftar sekarang
             dan pelajari semua kue kesukaanmu!</p-text>
-          <p-button @click="handleRedirectUser" href="/auth/login" variant="outline"
+          <p-button @click="handleRedirectUser" variant="outline"
             class="w-fit mt-8 !text-base-white">Mulai Belajar
             Sekarang</p-button>
         </div>

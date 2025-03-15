@@ -21,7 +21,7 @@ const handleSignOut = () => {
   <main class="max-w-7xl m-auto flex flex-col px-4">
     <div class="flex flex-row justify-between items-center">
       <header class="py-4">
-        <NuxtLink href="/">
+        <NuxtLink to="/">
           <NuxtImg src="/assets/logo.png" class="w-24 md:w-32" />
         </NuxtLink>
       </header>

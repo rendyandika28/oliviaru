@@ -28,7 +28,9 @@ useHead({
           <img :src="ClassBannerImg" alt="class-banner" class="aspect-video" />
           <p-heading element="h6" class="font-bold">Kelas Nastar karakter</p-heading>
           <small class="text-base-black/70">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, unde.</small>
-          <p-button href="/class/kelas-nastar-karakter" class="mt-3 bg-base-black text-base-white">Lihat Kelas</p-button>
+          <NuxtLink to="/class/kelas-nastar-karakter">
+            <p-button class="mt-3 bg-base-black text-base-white">Lihat Kelas</p-button>
+          </NuxtLink>
         </div>
       </div>
     </div>

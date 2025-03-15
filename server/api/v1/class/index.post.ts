@@ -5,8 +5,8 @@ import slugify from 'slugify';
 import { InferType } from 'yup';
 import formSchema from '~/form_schemas/create-class.formschema';
 import { ClassStatusEnum, VideoStatusEnum } from '~/server/database/schema';
+import { parsingForm, transformYupErrorsIntoObject } from '~/server/utils/form';
 import { uploadFile } from '~/server/utils/minio';
-import { parsingForm, transformYupErrorsIntoObject } from '~/utils/form';
 
 export default defineEventHandler(async (event: H3Event) => {
   try {
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event: H3Event) => {
 
     // Process thumbnail upload if exists
     let thumbnailUrl = null;
-    if (fields.thumbnail_url && fields.thumbnail_url) {
+    if (fields.thumbnail_url) {
       const thumbnailFile = fields.thumbnail_url;
       const thumbnailStream = createReadStream(thumbnailFile.filepath);
       const thumbnailFileName = `thumbnails/${createId()}-${thumbnailFile.originalFilename}`;

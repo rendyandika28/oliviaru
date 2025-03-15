@@ -5,11 +5,14 @@ import { useApiClass } from '~/composables/api/useApiClass';
 import formSchema from '~/form_schemas/create-class.formschema';
 
 type FormData = InferType<typeof formSchema>
-const { createClass } = useApiClass()
+const { updateClass, getByID } = useApiClass()
 const router = useRouter()
+const route = useRoute()
+
+const { data } = await getByID(route.params.id as unknown as number)
 
 async function onSubmit(values: FormData) {
-  await createClass(values, {
+  await updateClass(values, route.params.id as string, {
     onSuccess: res => {
       toast(res.body.message)
       router.push('/internal/class-management')
@@ -17,13 +20,28 @@ async function onSubmit(values: FormData) {
   })
 }
 
-const initialValues = ref<FormData>({
-  title: '',
-  description: '',
-  status: 'PUBLISHED',
-  thumbnail_url: '',
-  subclasses: []
+const rawValue = computed<FormData>(() => {
+  // return data.value?.data
+  return {
+    ...data.value?.data,
+    thumbnail_url: data.value?.data.thumbnailUrl,
+    subclasses: data.value?.data.subClasses?.map(sub => ({
+      id: sub.id,
+      title: sub.title,
+      description: sub.description,
+      video_url: sub.videoUrl
+    })),
+  };
 })
+
+const initialValues = ref<FormData>({
+  title: rawValue.value.title,
+  description: rawValue.value.description,
+  status: rawValue.value.status,
+  thumbnail_url: rawValue.value?.thumbnail_url,
+  subclasses: rawValue.value?.subclasses
+})
+
 </script>
 <template>
   <section class="px-4 lg:px-8 space-y-4 max-sm:my-8">
@@ -39,8 +57,8 @@ const initialValues = ref<FormData>({
     <div class="space-y-8">
       <div class="flex flex-row items-center justify-between">
         <div>
-          <p-heading element="h6">Tambah Kelas</p-heading>
-          <p-subheading size="sm">Isi form dibawah ini untuk membuat kelas baru yang akan ditampilkan untuk
+          <p-heading element="h6">Update Kelas</p-heading>
+          <p-subheading size="sm">Update form dibawah ini untuk mengubah informasi kelas yang akan ditampilkan untuk
             user</p-subheading>
         </div>
       </div>

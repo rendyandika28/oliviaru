@@ -51,7 +51,7 @@ watch(searchQuery, value => {
           <pi-search20 v-else />
         </template>
       </p-input>
-      <p-button v-if="addDataUrl !== ''" v-p-tooltip title="Tambah Data" color="default" :href="addDataUrl" icon><pi-add-plus20 /></p-button>
+      <p-button v-if="addDataUrl !== ''" color="default" :href="addDataUrl" icon><pi-add-plus20 /></p-button>
     </div>
   </div>
 

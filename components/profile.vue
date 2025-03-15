@@ -26,10 +26,10 @@ const handleSignOut = () => {
       </p-button>
     </template>
     <p-dropdown-item>
-      <nuxt-link class="flex flex-row gap-2 items-center" to="/internal/dashboard"><pi-home-16 />Internal Dashboard</nuxt-link>
+      <NuxtLink class="flex flex-row gap-2 items-center" to="/internal/dashboard"><pi-home-16 />Internal Dashboard</NuxtLink>
     </p-dropdown-item>
     <p-dropdown-item>
-      <nuxt-link class="flex flex-row gap-2 items-center" to="/class"><pi-list-view-16 /> Daftar Kelas</nuxt-link>
+      <NuxtLink class="flex flex-row gap-2 items-center" to="/class"><pi-list-view-16 /> Daftar Kelas</NuxtLink>
     </p-dropdown-item>
     <p-dropdown-item @click="handleSignOut"
       class="flex flex-row gap-2 items-center text-danger"><pi-sign-out-16 />Logout</p-dropdown-item>
