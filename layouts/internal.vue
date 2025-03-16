@@ -38,10 +38,12 @@ const menu = defineMenu([
     ]
   }
 ])
+
+watch(() => useRoute().path, () => model.value = false)
 </script>
 
 <template>
-  <p-sidebar-menu  :menus="menu" fixed toggleable="lg" v-model="model">
+  <p-sidebar-menu :menus="menu" fixed toggleable="lg" v-model="model">
     <p-sidebar-brand>
       <img src="/assets/logo.png" alt="logo" class="h-20" />
     </p-sidebar-brand>
@@ -82,6 +84,7 @@ const menu = defineMenu([
 :deep(div.sidebar__menus ul.nav .nav__item .nav__link) {
   @apply py-3 text-sm
 }
+
 :deep(div.sidebar__menus ul.nav .nav__item .nav__link.router-link-exact-active) {
   @apply bg-gray-5
 }

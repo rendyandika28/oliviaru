@@ -6,13 +6,19 @@ const route = useRoute()
 const { getSubclassBySlug } = useApiClass()
 const { data } = await getSubclassBySlug(route.params.materiSlug as string)
 
-const subClass = computed(() => data.value?.data) as unknown as SubClassData
+const subClass = computed(() => data.value?.data) as unknown as Ref<SubClassData>
 
+
+useHead({
+  title: subClass.value.title,
+})
 </script>
 <template>
   <section class="space-y-8 my-4">
     <div class="flex flex-row items-center gap-4">
-      <p-button variant="link" class="text-base-black" size="xs" icon pill><pi-chevron-circle-left-24 /></p-button>
+      <NuxtLink :to="`/class/${subClass.class?.slug}`">
+        <p-button variant="link" class="text-base-black" size="xs" icon pill><pi-chevron-circle-left-24 /></p-button>
+      </NuxtLink>
       <div class="flex flex-col">
         <p-subheading class="font-bold" element="h5">{{ subClass.class?.title }}</p-subheading>
         <p-heading class="font-bold" element="h5">{{ subClass.title }}</p-heading>

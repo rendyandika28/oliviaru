@@ -7,7 +7,11 @@ const route = useRoute()
 const { getBySlug } = useApiClass()
 const { data } = await getBySlug(route.params.slug as string)
 
-const classItem = computed(() => data.value?.data) as unknown as ClassData
+const classItem = computed(() => data.value?.data) as unknown as Ref<ClassData>
+
+useHead({
+  title: classItem.value.title,
+})
 </script>
 <template>
   <section class="space-y-8 my-4">
@@ -16,7 +20,7 @@ const classItem = computed(() => data.value?.data) as unknown as ClassData
         <p-button variant="link" class="text-base-black" size="xs" icon pill><pi-chevron-circle-left-24 /></p-button>
       </NuxtLink>
       <p-heading class="font-bold" element="h5">{{ classItem?.title }}</p-heading>
-      <p-divider class="border-2 w-10 border-base-black" />
+      <p-divider class="border-2 hidden md:block w-10 border-base-black" />
     </div>
 
     <img :src="ClassBannerImg" alt="class-banner" class="h-72 w-full object-cover rounded" />
@@ -32,12 +36,14 @@ const classItem = computed(() => data.value?.data) as unknown as ClassData
       <hr class="border-2 border-base-black w-14" />
 
       <p-list-group class="mt-4 w-full rounded">
-        <p-list-group-item v-for="subClasses in classItem.subClasses" class="flex flex-row items-center justify-between p-6 px-8"  element="link" :href="`/class/${route.params.slug}/${subClasses.slug}`">
+        <p-list-group-item v-for="subClasses in classItem.subClasses"
+          class="flex flex-row items-center justify-between p-6 md:px-8" element="link"
+          :href="`/class/${route.params.slug}/${subClasses.slug}`">
           <div class="flex flex-row items-center gap-4">
             <pi-video-camera-24 />
             <div class="flex flex-col">
               <p-text transform="uppercase" weight="extrabold">{{ subClasses.title }}</p-text>
-              <div class="truncate-html text-sm" v-html="subClasses.description"/>
+              <div class="truncate-html text-sm" v-html="subClasses.description" />
             </div>
           </div>
           <pi-play-16 />

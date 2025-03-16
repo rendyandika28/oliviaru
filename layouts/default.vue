@@ -29,7 +29,7 @@ const handleSignOut = () => {
     </div>
     <slot />
     <p-divider class="my-8" />
-    <footer class="flex flex-row items-end pb-16">
+    <footer class="flex flex-col md:flex-row items-start md:items-end pb-16 max-sm:gap-8">
       <div class="flex flex-col gap-8 flex-1">
         <NuxtImg src="/assets/logo.png" class="w-24 md:w-32" />
         <p-text variant="subheading2">
@@ -45,7 +45,7 @@ const handleSignOut = () => {
           </NuxtLink>
         </div>
       </div>
-      <small class="text-gray-50 flex-1 text-right">&copy;2025 Oliviaru, All rights reserved.</small>
+      <small class="text-gray-50 flex-1 md:text-right">&copy;2025 Oliviaru, All rights reserved.</small>
     </footer>
   </main>
 </template>
