@@ -2,13 +2,13 @@ import { H3Event } from "h3";
 import { ApiResponseFormatter } from "~/utils/api";
 
 export default defineEventHandler(async (event: H3Event) => {
-  const id = event.context.params?.id
-  if (!id) {
-    throw createError({ statusCode: 400, statusMessage: "id is required" });
+  const slug = event.context.params?.slug
+  if (!slug) {
+    throw createError({ statusCode: 400, statusMessage: "slug is required" });
   }
 
   const existingClass = await useDrizzle().query.classTable.findFirst({
-    where: eq(tables.subClassTable.id, Number(id)),
+    where: eq(tables.classTable.slug, slug),
     with: {
       subClasses: {
         orderBy: (subClasses) => [subClasses.orderIndex]

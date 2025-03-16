@@ -24,6 +24,7 @@ export interface SubClassData {
   classId: number
   createdAt: string
   updatedAt: string
+  class?: ClassData
 }
 
 export type ClassListResponse = ApiResponseMeta<ClassData[]>

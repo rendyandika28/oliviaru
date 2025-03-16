@@ -5,11 +5,11 @@ import { useApiClass } from '~/composables/api/useApiClass';
 import formSchema from '~/form_schemas/create-class.formschema';
 
 type FormData = InferType<typeof formSchema>
-const { updateClass, getByID } = useApiClass()
+const { updateClass, getBySlug } = useApiClass()
 const router = useRouter()
 const route = useRoute()
 
-const { data } = await getByID(route.params.id as unknown as number)
+const { data } = await getBySlug(route.params.slug as string)
 
 async function onSubmit(values: FormData) {
   await updateClass(values, route.params.id as string, {
@@ -21,7 +21,6 @@ async function onSubmit(values: FormData) {
 }
 
 const rawValue = computed<FormData>(() => {
-  // return data.value?.data
   return {
     ...data.value?.data,
     thumbnail_url: data.value?.data.thumbnailUrl,

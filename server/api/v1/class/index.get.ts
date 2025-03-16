@@ -1,5 +1,5 @@
 import { H3Event } from "h3"
-import { sql } from "drizzle-orm";
+import { sql, like } from "drizzle-orm";
 import { ApiResponseFormatter } from "~/utils/api";
 
 export default defineEventHandler(async (event: H3Event) => {
@@ -16,19 +16,24 @@ export default defineEventHandler(async (event: H3Event) => {
     .from(tables.classTable).execute()
 
   // Fetch class with optional search and pagination
-  let classQuery = useDrizzle()
-    .select()
-    .from(tables.classTable)
-    .limit(limit)
-    .offset(offset)
+  let classQuery = useDrizzle().query.classTable.findMany({
+    limit,
+    offset,
+    with: {
+      subClasses: true,
+    },
+  });
 
+  // Add conditional where clause for search
   if (search) {
-    classQuery = classQuery.where(
-      or(
-        sql`LOWER(${tables.classTable.title}) LIKE LOWER(${search})`,
-        sql`LOWER(${tables.classTable.description}) LIKE LOWER(${search})`
-      )
-    );
+    classQuery = useDrizzle().query.classTable.findMany({
+      limit,
+      offset,
+      where: or(
+        like(tables.classTable.title, `%${search}%`),
+        like(tables.classTable.description, `%${search}%`)
+      ),
+    });
   }
 
   const users = await classQuery.execute();

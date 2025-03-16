@@ -31,14 +31,14 @@ const queryParams = ref({
 
 const { data, status, refresh } = await getAll(queryParams)
 
-const onDelete = (id: number) => {
+const onDelete = (slug: string) => {
   dialog.confirm({
     title: 'Delete Confirmation',
     text: 'Are you sure?',
     size: 'sm',
   }).then(async (value) => {
     if (value === true) {
-      await deleteClass(id, {
+      await deleteClass(slug, {
         onSuccess: () => {
           dialog.alert({
             title: 'Info',
@@ -76,12 +76,12 @@ const onDelete = (id: number) => {
             <pi-menu-vertical-16 />
           </template>
           <p-dropdown-item>
-            <NuxtLink class="flex flex-row items-center gap-3" :to="`/internal/class-management/${item.id}`">
+            <NuxtLink class="flex flex-row items-center gap-3" :to="`/internal/class-management/${item.slug}`">
               <pi-view16 />
               <span>Detail</span>
             </NuxtLink>
           </p-dropdown-item>
-          <p-dropdown-item @click="onDelete(item.id)" class="text-danger flex flex-row items-center gap-3">
+          <p-dropdown-item @click="onDelete(item.slug)" class="text-danger flex flex-row items-center gap-3">
             <pi-trash16 />
             <span>Delete</span>
           </p-dropdown-item>

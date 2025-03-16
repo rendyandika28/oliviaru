@@ -25,7 +25,7 @@ const handleSignOut = () => {
         </div>
       </p-button>
     </template>
-    <p-dropdown-item>
+    <p-dropdown-item v-if="user?.role === 'SUPER_ADMIN'">
       <NuxtLink class="flex flex-row gap-2 items-center" to="/internal/dashboard"><pi-home-16 />Internal Dashboard</NuxtLink>
     </p-dropdown-item>
     <p-dropdown-item>

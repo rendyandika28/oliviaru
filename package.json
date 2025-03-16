@@ -21,6 +21,7 @@
     "@vueuse/nuxt": "13.0.0",
     "drizzle-orm": "^0.40.0",
     "formidable": "^3.5.2",
+    "get-youtube-id": "^1.0.1",
     "minio": "^8.0.4",
     "mysql2": "^3.13.0",
     "next-auth": "~4.21.1",

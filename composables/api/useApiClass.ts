@@ -15,8 +15,12 @@ export function useApiClass() {
     })
   }
 
-  const getByID = (id: number) => {
-    return useApi<ClassListResponse>(`${API_ENDPOINT.ADMIN.CLASS}/${id}`)
+  const getBySlug = (slug: string) => {
+    return useApi<ClassListResponse>(`${API_ENDPOINT.ADMIN.CLASS}/${slug}`)
+  }
+
+  const getSubclassBySlug = (slug: string) => {
+    return useApi<ClassListResponse>(`${API_ENDPOINT.ADMIN.SUBCLASS}/${slug}`)
   }
 
   const createClass = (payload: FormData, options?: Partial<ApiFetchOptions<ApiResponse<ClassData>>>) => {
@@ -39,8 +43,8 @@ export function useApiClass() {
     })
   }
 
-  const deleteClass = (id: number, options?: Partial<ApiFetchOptions<ApiResponse<ClassData>>>) => {
-    return useApi(`${API_ENDPOINT.ADMIN.CLASS}/${id}`, {
+  const deleteClass = (slug: string, options?: Partial<ApiFetchOptions<ApiResponse<ClassData>>>) => {
+    return useApi(`${API_ENDPOINT.ADMIN.CLASS}/${slug}`, {
       ...options,
       method: 'DELETE'
     })
@@ -50,7 +54,8 @@ export function useApiClass() {
 
   return {
     getAll,
-    getByID,
+    getBySlug,
+    getSubclassBySlug,
     createClass,
     updateClass,
     deleteClass

@@ -11,18 +11,14 @@ import { uploadFile } from '~/server/utils/minio';
 
 export default defineEventHandler(async (event: H3Event) => {
   try {
-    // Get class ID from URL params
-    const id = getRouterParam(event, 'id')
-    if (!id || isNaN(Number(id))) {
-      throw createError({
-        statusCode: 400,
-        message: 'Invalid class ID'
-      })
+    const _slug = event.context.params?.slug
+    if (!_slug) {
+      throw createError({ statusCode: 400, statusMessage: "slug is required" });
     }
 
     // Check if class exists
     const existingClass = await useDrizzle().query.classTable.findFirst({
-      where: eq(tables.classTable.id, Number(id)),
+      where: eq(tables.classTable.slug, _slug),
       with: {
         subClasses: true
       }
@@ -83,7 +79,7 @@ export default defineEventHandler(async (event: H3Event) => {
         thumbnailUrl,
         status: fields.status || existingClass.status,
       })
-        .where(eq(tables.classTable.id, Number(id)))
+        .where(eq(tables.classTable.id, existingClass.id))
 
       if (fields.subclasses.length === 0) {
         throw new Error('At least one subclass is required');
@@ -138,7 +134,7 @@ export default defineEventHandler(async (event: H3Event) => {
             orderIndex,
             videoUrl: subClass?.video_url,
             videoStatus,
-            classId: Number(id)
+            classId: existingClass.id
           })
         }
       }
