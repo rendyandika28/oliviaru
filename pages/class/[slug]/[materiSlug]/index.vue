@@ -24,12 +24,7 @@ useHead({
         <p-heading class="font-bold" element="h5">{{ subClass.title }}</p-heading>
       </div>
     </div>
-
-    <video class="w-full" height="240" controls controlsList="nodownload" oncontextmenu="return false;">
-      <source :src="subClass.videoUrl" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-
+    <VideoPlayer :src="subClass.videoUrl" />
     <div class="flex flex-col gap-2">
       <p-heading transform="capitalize" weight="bold" element="h6">DESKRIPSI MATERI</p-heading>
       <hr class="border-2 border-base-black w-10" />

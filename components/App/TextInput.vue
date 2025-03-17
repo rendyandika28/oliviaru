@@ -46,14 +46,6 @@ const props = defineProps({
   }
 })
 const { value, errorMessage } = useField<string>(toRef(props, "name"), undefined);
-
-const isVideoErrorLoaded = ref<boolean>(false)
-const handleVideoLoad = () => {
-  isVideoErrorLoaded.value = false
-}
-const handleVideoError = () => {
-  isVideoErrorLoaded.value = true
-}
 </script>
 <template>
   <p-form-group :error="errorMessage" :required="required">
@@ -75,11 +67,7 @@ const handleVideoError = () => {
 
   <!-- Handle preview video -->
   <div v-if="type === 'video' && value">
-    <p-banner v-if="isVideoErrorLoaded" variant="danger" :dismissable="false">URL Video Tidak ditemukan</p-banner>
-    <video @canplay="handleVideoLoad" class="w-full" height="240" :key="value" controls controlsList="nodownload" oncontextmenu="return false;">
-      <source @error="handleVideoError" :src="value" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <VideoPlayer :key="value" :src="value" />
   </div>
 </template>
 <style lang="scss" scoped></style>
