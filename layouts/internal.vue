@@ -45,7 +45,9 @@ watch(() => useRoute().path, () => model.value = false)
 <template>
   <p-sidebar-menu :menus="menu" fixed toggleable="lg" v-model="model">
     <p-sidebar-brand>
-      <img src="/assets/logo.png" alt="logo" class="h-20" />
+      <NuxtLink to="/">
+        <NuxtImg src="/assets/logo.png" class="h-20" />
+      </NuxtLink>
     </p-sidebar-brand>
   </p-sidebar-menu>
   <p-page expand="lg" v-model="model">
