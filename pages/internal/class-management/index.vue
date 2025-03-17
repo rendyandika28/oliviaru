@@ -64,7 +64,7 @@ const onDelete = (slug: string) => {
       sub-title="Data dibawah merupakan daftar kelas yang telah terdaftar di website" :fields="fields"
       :items="data?.data">
       <template #cell(thumbnailUrl)="{ item }">
-        <img :src="item?.thumbnailUrl" :alt="item?.title" referrerPolicy="no-referrer" class="size-20 aspect-video" />
+        <img :src="item?.thumbnailUrl" :alt="item?.title" referrerPolicy="no-referrer" class="size-20 object-cover" />
       </template>
       <template #cell(status)="{ item }">
         <p-label :color="item?.status === 'PUBLISHED' ? 'success' : 'warning'" variant="light">{{ item?.status

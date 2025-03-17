@@ -37,16 +37,16 @@ useHead({
 
       <p-list-group class="mt-4 w-full rounded">
         <p-list-group-item v-for="subClasses in classItem.subClasses"
-          class="flex flex-row items-center justify-between p-6 md:px-8" element="link"
+          class="flex flex-row items-center justify-between p-6 md:px-8 gap-8" element="link"
           :href="`/class/${route.params.slug}/${subClasses.slug}`">
           <div class="flex flex-row items-center gap-4">
-            <pi-video-camera-24 />
-            <div class="flex flex-col">
+            <pi-video-camera-24/>
+            <div class="flex flex-col flex-1">
               <p-text transform="uppercase" weight="extrabold">{{ subClasses.title }}</p-text>
               <div class="truncate-html text-sm" v-html="subClasses.description" />
             </div>
           </div>
-          <pi-play-16 />
+          <pi-play-24/>
         </p-list-group-item>
       </p-list-group>
     </div>

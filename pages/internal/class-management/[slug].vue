@@ -12,7 +12,7 @@ const route = useRoute()
 const { data } = await getBySlug(route.params.slug as string)
 
 async function onSubmit(values: FormData) {
-  await updateClass(values, route.params.id as string, {
+  await updateClass(values, route.params.slug as string, {
     onSuccess: res => {
       toast(res.body.message)
       router.push('/internal/class-management')
