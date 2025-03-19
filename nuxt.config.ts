@@ -69,6 +69,7 @@ export default defineNuxtConfig({
     minioRegion: process.env.NUXT_MINIO_REGION || '',
   },
   auth: {
+    baseURL: process.env.NUXT_AUTH_ORIGIN || '',
     provider: {
       type: 'authjs',
       trustHost: false,
