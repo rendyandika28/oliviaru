@@ -1,6 +1,7 @@
 // file: ~/middleware/authentication.global.ts
-export default defineNuxtRouteMiddleware((to) => {
-  const { status, data } = useAuth()
+export default defineNuxtRouteMiddleware(async (to) => {
+  const { status } = useAuth()
+  const { user } = storeToRefs(useAuthStore())
 
   // If authenticated user tries to access login page, redirect to home
   if (status.value === 'authenticated' && to.path === '/auth/login') {
@@ -10,7 +11,7 @@ export default defineNuxtRouteMiddleware((to) => {
   // Return immediately if user is already authenticated
   if (status.value === 'authenticated') {
     // Check if user is not SUPER_ADMIN and trying to access internal routes
-    if (data && data.value?.user.role !== 'SUPER_ADMIN' && to.path.startsWith('/internal/')) {
+    if (user.value && user.value?.role !== 'SUPER_ADMIN' && to.path.startsWith('/internal/')) {
       return navigateTo('/class')
     }
     return

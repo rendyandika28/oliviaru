@@ -7,10 +7,15 @@ export default defineNuxtConfig({
     '@privyid/persona',
     '@privyid/persona-icon',
     '@nuxt/image',
-    '@pinia/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/google-fonts',
     '@sidebase/nuxt-auth',
+    [
+      '@pinia/nuxt',
+      {
+        autoImports: ['defineStore', 'storeToRefs'],
+      },
+    ],
     [
       '@vee-validate/nuxt',
       {
@@ -46,8 +51,13 @@ export default defineNuxtConfig({
       redirect: '/internal/dashboard'
     }
   },
+  imports: {
+    // Auto-import pinia stores defined in `~/stores`
+    dirs: ['stores'],
+  },
   runtimeConfig: {
     authSecretKey: process.env.NUXT_AUTH_SECRET_KEY || '',
+    jwtSecretKey: process.env.NUXT_JWT_SECRET_KEY || '',
     googleClientID: process.env.NUXT_GOOGLE_CLIENT_ID || '',
     googleClientSecret: process.env.NUXT_GOOGLE_CLIENT_SECRET || '',
     minioEndpoint: process.env.NUXT_MINIO_ENDPOINT || '',

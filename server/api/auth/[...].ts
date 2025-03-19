@@ -1,43 +1,7 @@
 import { NuxtAuthHandler } from '#auth';
 import GoogleProvider from 'next-auth/providers/google';
 import { GoogleAuthResponse } from '~/types/type.auth';
-
-async function refreshAccessToken(token: JWT) {
-  try {
-    const url = "https://oauth2.googleapis.com/token";
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        client_id: process.env.GOOGLE_CLIENT_ID ?? "",
-        client_secret: process.env.GOOGLE_CLIENT_SECRET ?? "",
-        grant_type: "refresh_token",
-        refresh_token: token.refreshToken as string,
-      }),
-    });
-
-    const refreshedTokens = await response.json();
-
-    if (!response.ok) {
-      throw refreshedTokens;
-    }
-
-    return {
-      ...token,
-      accessToken: refreshedTokens.access_token,
-      accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000, // Expiry time in ms
-      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Keep the old refresh token if new one is not returned
-    };
-  } catch (error) {
-    console.error("Error refreshing access token", error);
-    return {
-      ...token,
-      error: "RefreshAccessTokenError",
-    };
-  }
-}
+import { generateAccessToken } from '~/utils/auth';
 
 export default NuxtAuthHandler({
   // A secret string you define, to ensure correct encryption
@@ -66,14 +30,14 @@ export default NuxtAuthHandler({
       if (account?.provider === "google") {
         const { provider, providerAccountId } = account as GoogleAuthResponse;
 
-        const existingUsers = await useDrizzle().select({ id: tables.user.id, role: tables.user.role, user_status: tables.user.userStatus }).from(tables.user).where(and(
-          eq(tables.user.provider, provider),
-          eq(tables.user.providerAccountId, providerAccountId),
-        ))
+        const existingUser = await useDrizzle().query.user.findFirst({
+          where: and(
+            eq(tables.user.provider, provider),
+            eq(tables.user.providerAccountId, providerAccountId),
+          )
+        })
 
-        const _user = existingUsers[0];
-
-        if (!_user) {
+        if (!existingUser) {
           // Create new user
           await useDrizzle().insert(tables.user).values({
             email: user.email as string,
@@ -81,18 +45,17 @@ export default NuxtAuthHandler({
             name: user.name,
             provider,
             providerAccountId,
-            // Default values for role and userStatus will be applied as defined in the schema
           }).execute();
 
           return '/auth/login?error=newUserPending';
         }
 
-        if (!_user || _user.user_status === 'PENDING') {
+        if (!existingUser || existingUser.userStatus === 'PENDING') {
           return '/auth/login?error=userPending';
         }
 
-        user.id = _user.id;
-        user.role = _user.role;
+        user.id = existingUser.id;
+        user.role = existingUser.role;
       }
       return true;
     },
@@ -116,26 +79,42 @@ export default NuxtAuthHandler({
     },
     /* on JWT token creation or mutation */
     async jwt({ token, user, account }) {
-      if (account) {
-        token.id = account.providerAccountId;
-        token.accessToken = account.access_token;
-        token.accessTokenExpires = account.expires_at
-          ? account.expires_at * 1000
-          : null;
-        token.refreshToken = account.refresh_token;
+      if (account && user) {
+        token.id = user.id;
+        token.role = user.role;
+        const accessToken = generateAccessToken(user.id); // Generate custom token
+        const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // Expires in 7 days
+
+        const existingToken = await useDrizzle()
+          .select()
+          .from(tables.userToken)
+          .where(eq(tables.userToken.userId, user.id))
+          .limit(1);
+
+        if (existingToken.length > 0) {
+          // Update existing token
+          await useDrizzle()
+            .update(tables.userToken)
+            .set({ token: accessToken, expiresAt })
+            .where(eq(tables.userToken.userId, user.id))
+            .execute();
+        } else {
+          // Insert new token
+          await useDrizzle()
+            .insert(tables.userToken)
+            .values({
+              userId: user.id,
+              token: accessToken,
+              expiresAt,
+            })
+            .execute();
+        }
+
+        token.accessToken = accessToken; // Set custom token in JWT
+        token.accessTokenExpires = expiresAt.getTime(); // Set custom token expiration
       }
 
-      if (user) {
-        token.id = user.id; // Attach id to JWT token
-        token.role = user.role; // Attach role to JWT token
-      }
-
-      // If access token is expired, refresh it
-      if (token.accessTokenExpires && Date.now() > token.accessTokenExpires) {
-        return await refreshAccessToken(token);
-      }
-
-      return token
+      return token;
     }
   },
   session: {

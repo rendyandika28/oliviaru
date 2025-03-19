@@ -39,6 +39,14 @@ export const user = mysqlTable('user', {
   updatedAt: timestamp('updated_at').notNull().default(sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`),
 })
 
+export const userToken = mysqlTable('user_token', {
+  id: varchar('id', { length: 128 }).primaryKey().$defaultFn(() => createId()),
+  userId: varchar('user_id', { length: 128 }).notNull().references(() => user.id, { onDelete: 'cascade' }),
+  token: varchar('token', { length: 255 }).notNull().unique(),
+  expiresAt: timestamp('expires_at').notNull(),
+  createdAt: timestamp('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
 export const classTable = mysqlTable('class', {
   id: int('id').primaryKey().autoincrement(),
   title: varchar('title', { length: 255 }).notNull(),
@@ -89,6 +97,8 @@ export const subClassRelations = relations(subClassTable, ({ one }) => ({
 // Define the schema for type safety
 export type User = InferSelectModel<typeof user>
 export type NewUser = InferInsertModel<typeof user>
+export type UserToken = InferSelectModel<typeof userToken>
+export type NewUserToken = InferInsertModel<typeof userToken>
 
 export type Class = InferSelectModel<typeof classTable>;
 export type NewClass = InferInsertModel<typeof classTable>;

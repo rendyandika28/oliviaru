@@ -23,7 +23,8 @@ const handleRedirectUser = () => {
 <template>
   <section>
     <div class="fixed inset-0 size-full overflow-hidden -z-20">
-      <video :controls="false" autoplay muted loop class="absolute top-[50%] left-[50%] min-w-full min-h-full size-auto object-cover"
+      <video :controls="false" autoplay muted loop
+        class="absolute top-[50%] left-[50%] min-w-full min-h-full size-auto object-cover"
         style="transform: translate(-50%, -50%);">
         <source src="/assets/background.mp4" type="video/mp4">
       </video>
@@ -41,8 +42,7 @@ const handleRedirectUser = () => {
           </p-heading>
           <p-text>Mulai perjalanan baking Anda hari ini, daftar sekarang
             dan pelajari semua kue kesukaanmu!</p-text>
-          <p-button @click="handleRedirectUser" variant="outline"
-            class="w-fit mt-8 !text-base-white">Mulai Belajar
+          <p-button @click="handleRedirectUser" variant="outline" class="w-fit mt-8 !text-base-white">Mulai Belajar
             Sekarang</p-button>
         </div>
       </div>

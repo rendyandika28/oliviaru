@@ -22,6 +22,13 @@
       "when": 1741919975991,
       "tag": "0002_lazy_saracen",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1742230382376,
+      "tag": "0003_bizarre_tomorrow_man",
+      "breakpoints": true
     }
   ]
 }

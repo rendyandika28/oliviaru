@@ -1,20 +1,9 @@
 <script setup lang="ts">
-const model = ref(false)
-const { status, signOut } = useAuth()
-const isAuthenticated = computed(() => status.value === 'authenticated')
 const { application: { title } } = useAppConfig()
-
 useHead({
   titleTemplate: titleChunk =>
     titleChunk ? `${titleChunk} • ${title}` : title,
 })
-
-const handleSignOut = () => {
-  signOut({
-    redirect: true,
-    callbackUrl: '/'
-  })
-}
 </script>
 
 <template>

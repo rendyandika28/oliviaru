@@ -1,9 +1,8 @@
 <script setup lang="ts">
 const model = ref(false)
-const { status, signOut, data } = useAuth()
+const { status, signOut } = useAuth()
+const { user } = storeToRefs(useAuthStore())
 const isAuthenticated = computed(() => status.value === 'authenticated')
-
-const user = computed(() => data.value?.user)
 const userRole = computed(() => user.value?.role.replace('_', ' '))
 
 const handleSignOut = () => {

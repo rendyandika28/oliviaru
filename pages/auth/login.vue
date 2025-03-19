@@ -19,7 +19,8 @@ const { query } = useRoute()
 const errorMessages = {
   userUnauthorized: 'Masuk terlebih dulu sebelum mengakses kelas',
   newUserPending: 'Akun anda akan didaftarkan terlebih dahulu, silahkan hubungi admin',
-  userPending: 'Status akun anda masih PENDING, silahkan hubungi admin'
+  userPending: 'Status akun anda masih PENDING, silahkan hubungi admin',
+  multipleLogin: 'Dilarang login menggunakan lebih dari 1 device'
 };
 
 const errorMessage = query?.error ? errorMessages[query.error] : null;

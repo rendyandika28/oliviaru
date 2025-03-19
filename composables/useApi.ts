@@ -19,9 +19,6 @@ export type ApiFetchOptions<T> = UseFetchOptions<T> & {
 
 export async function useApi<T>(url: string, opts: ApiFetchOptions<T> = {}) {
   const { excludeInterceptor, ...options } = opts
-
-  const nuxtApp = useNuxtApp()
-
   const defaults: UseFetchOptions<T> = {
     async onRequest({ options }) {
       options.headers = new Headers(options.headers)
@@ -45,11 +42,13 @@ export async function useApi<T>(url: string, opts: ApiFetchOptions<T> = {}) {
       }
 
       if (!excludedInterceptor(ctx.response.status)) {
+        const { signOut } = useAuth()
         if (ctx.response.status === 401) {
           toast('Session Expired: your session has expired, please log in.')
-
-          if (typeof window !== 'undefined')
-            window.location.reload()
+          return signOut({
+            redirect: true,
+            callbackUrl: '/'
+          })
         }
 
         if (ctx.response.status === 403) {
