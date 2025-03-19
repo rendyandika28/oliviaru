@@ -60,8 +60,8 @@ export default NuxtAuthHandler({
       return true;
     },
     /* on redirect to another url */
-    async redirect({ baseUrl }) {
-      return baseUrl
+    async redirect({  url, baseUrl }) {
+      return url.startsWith(baseUrl) ? "/" : baseUrl;
     },
     /* on session retrival */
     async session({ session, token }) {
