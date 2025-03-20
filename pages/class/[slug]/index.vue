@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ClassBannerImg from '~/assets/images/class.jpg';
 import { useApiClass } from '~/composables/api/useApiClass';
 import type { ClassData } from '~/types/responses/class_response_type';
 
@@ -14,16 +13,16 @@ useHead({
 })
 </script>
 <template>
-  <section class="space-y-8 my-4">
-    <div class="flex flex-row items-center gap-4">
+  <section class="my-4 space-y-8">
+    <div class="flex flex-row gap-4 items-center">
       <NuxtLink to="/class">
         <p-button variant="link" class="text-base-black" size="xs" icon pill><pi-chevron-circle-left-24 /></p-button>
       </NuxtLink>
       <p-heading class="font-bold" element="h5">{{ classItem?.title }}</p-heading>
-      <p-divider class="border-2 hidden md:block w-10 border-base-black" />
+      <p-divider class="border-2 border-base-black w-10 hidden md:block" />
     </div>
 
-    <img :src="ClassBannerImg" alt="class-banner" class="h-72 w-full object-cover rounded" />
+    <img :src="classItem?.thumbnailUrl" alt="class-banner" class="h-72 rounded w-full object-cover" />
 
     <div class="flex flex-col gap-2">
       <p-heading transform="capitalize" weight="bold" element="h6">DESKRIPSI KELAS</p-heading>
@@ -31,19 +30,19 @@ useHead({
       <div class="text-sm mt-5" v-html="classItem.description" />
     </div>
 
-    <div class="flex flex-col justify-center items-center gap-2">
+    <div class="flex flex-col justify-center gap-2 items-center">
       <p-heading transform="capitalize" weight="bold" element="h6">MATERI KELAS</p-heading>
       <hr class="border-2 border-base-black w-14" />
 
-      <p-list-group class="mt-4 w-full rounded">
+      <p-list-group class="rounded w-full mt-4">
         <p-list-group-item v-for="subClasses in classItem.subClasses"
-          class="flex flex-row items-center justify-between p-6 md:px-8 gap-8" element="link"
+          class="flex flex-row justify-between p-6 gap-8 items-center md:px-8" element="link"
           :href="`/class/${route.params.slug}/${subClasses.slug}`">
-          <div class="flex flex-row items-center gap-4">
+          <div class="flex flex-row gap-4 items-center">
             <pi-video-camera-24/>
-            <div class="flex flex-col flex-1">
+            <div class="flex flex-1 flex-col">
               <p-text transform="uppercase" weight="extrabold">{{ subClasses.title }}</p-text>
-              <div class="truncate-html text-sm" v-html="subClasses.description" />
+              <div class="text-sm truncate-html" v-html="subClasses.description" />
             </div>
           </div>
           <pi-play-24/>
