@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const isCollapse = ref<boolean>(true)
+const isCollapse = ref<boolean>(false)
 const toggleCollapse = () => isCollapse.value = !isCollapse.value
 </script>
 <template>
-  <div class="flex-1 flex flex-col">
+  <div class="flex flex-1 flex-col">
     <slot name="activator" :is-collapse="isCollapse" :toggle-collapse="toggleCollapse"/>
     <p-collapse v-model="isCollapse">
       <slot />
