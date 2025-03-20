@@ -35,7 +35,7 @@ onBeforeUnmount(() => {
 
 <template>
   <p-banner v-if="isVideoErrorLoaded" variant="danger" :dismissable="false">URL Video Tidak ditemukan</p-banner>
-  <video @canplay="isVideoErrorLoaded = false" @error="isVideoErrorLoaded = true" ref="videoPlayer" class="video-js vjs-default-skin w-full"
+  <video :autoplay="false" @canplay="isVideoErrorLoaded = false" @error="isVideoErrorLoaded = true" ref="videoPlayer" class="w-full video-js vjs-default-skin"
     controls controlsList="nodownload" oncontextmenu="return false;" />
 </template>
 
