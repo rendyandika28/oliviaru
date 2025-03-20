@@ -10,7 +10,12 @@ export default defineEventHandler(async (event: H3Event) => {
   const existingSubClass = await useDrizzle().query.subClassTable.findFirst({
     where: eq(tables.subClassTable.slug, slug),
     with: {
-      class: true
+      class: {
+        columns: {
+          slug: true,
+          title: true,
+        },
+      }
     }
   })
 
@@ -21,5 +26,14 @@ export default defineEventHandler(async (event: H3Event) => {
     })
   }
 
-  return ApiResponseFormatter(200, "Success get class", existingSubClass)
+  // Fetch the slug of the next subclass with the same class_id and orderIndex + 1
+  const nextSubClass = await useDrizzle().query.subClassTable.findFirst({
+    where: and(
+      eq(tables.subClassTable.classId, existingSubClass.classId),
+      eq(tables.subClassTable.orderIndex, existingSubClass.orderIndex + 1)
+    ),
+    columns: { slug: true }, // Only fetch the slug
+  });
+
+  return ApiResponseFormatter(200, "Success get class", {...existingSubClass, nextSubClassSlug: nextSubClass?.slug || null})
 })

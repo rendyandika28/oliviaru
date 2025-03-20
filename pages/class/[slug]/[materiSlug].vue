@@ -14,14 +14,19 @@ useHead({
 </script>
 <template>
   <section class="my-4 space-y-8">
-    <div class="flex flex-row gap-4 items-center">
-      <NuxtLink :to="`/class/${subClass.class?.slug}`">
-        <p-button variant="link" class="text-base-black" size="xs" icon pill><pi-chevron-circle-left-24 /></p-button>
-      </NuxtLink>
-      <div class="flex flex-col">
-        <p-subheading class="font-bold" element="h5">{{ subClass.class?.title }}</p-subheading>
-        <p-heading class="font-bold" element="h5">{{ subClass.title }}</p-heading>
+    <div class="flex flex-row justify-between items-center">
+      <div class="flex flex-row gap-4 items-center">
+        <NuxtLink :to="`/class/${subClass.class?.slug}`">
+          <p-button variant="link" class="text-base-black" size="xs" icon pill><pi-chevron-circle-left-24 /></p-button>
+        </NuxtLink>
+        <div class="flex flex-col">
+          <p-subheading class="font-bold" element="h5">{{ subClass.class?.title }}</p-subheading>
+          <p-heading class="font-bold" element="h5">{{ subClass.title }}</p-heading>
+        </div>
       </div>
+      <NuxtLink v-if="subClass?.nextSubClassSlug" :to="`/class/${subClass.class?.slug}/${subClass?.nextSubClassSlug}`">
+        <p-button class="bg-base-black text-base-white mt-3">Kelas Selanjutnya</p-button>
+      </NuxtLink>
     </div>
     <VideoPlayer :src="subClass.videoUrl" />
     <div class="flex flex-col gap-2">
