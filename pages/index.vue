@@ -8,17 +8,6 @@ useHead({
   title: `Halaman utama • ${title}`
 })
 
-
-const { status } = useAuth()
-const router = useRouter()
-
-const handleRedirectUser = () => {
-  if (status.value === 'unauthenticated') {
-    router.push('/auth/login')
-  } else {
-    router.push('/class')
-  }
-}
 </script>
 <template>
   <section>
@@ -42,7 +31,7 @@ const handleRedirectUser = () => {
           </p-heading>
           <p-text>Mulai perjalanan baking Anda hari ini, daftar sekarang
             dan pelajari semua kue kesukaanmu!</p-text>
-          <p-button @click="handleRedirectUser" variant="outline" class="w-fit mt-8 !text-base-white">Mulai Belajar
+          <p-button href="/class" variant="outline" class="w-fit mt-8 !text-base-white">Mulai Belajar
             Sekarang</p-button>
         </div>
       </div>

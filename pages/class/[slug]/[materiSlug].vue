@@ -8,14 +8,13 @@ const { data } = await getSubclassBySlug(route.params.materiSlug as string)
 
 const subClass = computed(() => data.value?.data) as unknown as Ref<SubClassData>
 
-
 useHead({
   title: subClass.value.title,
 })
 </script>
 <template>
-  <section class="space-y-8 my-4">
-    <div class="flex flex-row items-center gap-4">
+  <section class="my-4 space-y-8">
+    <div class="flex flex-row gap-4 items-center">
       <NuxtLink :to="`/class/${subClass.class?.slug}`">
         <p-button variant="link" class="text-base-black" size="xs" icon pill><pi-chevron-circle-left-24 /></p-button>
       </NuxtLink>

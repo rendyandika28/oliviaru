@@ -17,16 +17,21 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return
   }
 
+  // PROTECTED ROUTES
   // Define routes that require authentication
-  const protectedRoutes = ['class', 'internal']
+  const protectedRoutes = ['internal']
+  const protectedRoutesName = ['class-slug-materiSlug']
 
   // Check if the current route starts with any of the protected route prefixes
-  const isProtectedRoute = protectedRoutes.some(route =>
+  const isProtectedPath = protectedRoutes.some(route =>
     to.path.startsWith(`/${route}`)
   )
 
+  // Check if the current named route is in the protected routes
+  const isProtectedName = protectedRoutesName.includes(to.name as string);
+
   // If it's a protected route and user is not authenticated, redirect to login
-  if (isProtectedRoute) {
+  if (isProtectedPath || isProtectedName) {
     return navigateTo('/auth/login?error=Unauthorized')
   }
 })

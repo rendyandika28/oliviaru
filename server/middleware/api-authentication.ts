@@ -6,9 +6,10 @@ import { UserToken } from "../database/schema";
 export default defineEventHandler(async (event: H3Event) => {
   const requestUrl = getRequestURL(event)
   const isApiRouting = requestUrl.pathname.includes('/api/v1')
+  const publicRouting = ['/api/v1/class']
 
   // Check for authentication when accessing API
-  if (isApiRouting) {
+  if (isApiRouting && !publicRouting.some(route => requestUrl.pathname.startsWith(route))) {
     const { accessToken } = await getServerSession(event)
     if (!accessToken) {
       return sendError(event, {
