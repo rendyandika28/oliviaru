@@ -67,6 +67,9 @@ export default defineNuxtConfig({
     minioSecretKey: process.env.NUXT_MINIO_SECRET_KEY || '',
     minioBucket: process.env.NUXT_MINIO_BUCKET || '',
     minioRegion: process.env.NUXT_MINIO_REGION || '',
+    public:{
+      adminPhonenumber: process.env.NUXT_PUBLIC_ADMIN_PHONENUMBER || '',
+    }
   },
   auth: {
     baseURL: process.env.NUXT_AUTH_ORIGIN || '',
