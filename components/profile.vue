@@ -1,8 +1,7 @@
 <script setup lang="ts">
 const model = ref(false)
-const { status, signOut } = useAuth()
+const { signOut } = useAuth()
 const { user } = storeToRefs(useAuthStore())
-const isAuthenticated = computed(() => status.value === 'authenticated')
 const userRole = computed(() => user.value?.role.replace('_', ' '))
 
 const handleSignOut = () => {
@@ -13,7 +12,7 @@ const handleSignOut = () => {
 }
 </script>
 <template>
-  <p-dropdown v-if="isAuthenticated" no-caret placement="bottom-end">
+  <p-dropdown no-caret placement="bottom-end">
     <template #activator="{ open }">
       <p-button variant="ghost" size="sm" @click="open" class="flex flex-row items-center gap-2 h-fit"
         :class="{ 'hidden': model }">

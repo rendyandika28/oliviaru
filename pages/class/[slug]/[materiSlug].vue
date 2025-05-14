@@ -3,8 +3,14 @@ import { useApiClass } from '~/composables/api/useApiClass';
 import type { SubClassData } from '~/types/responses/class_response_type';
 
 const route = useRoute()
+const { isSuperAdmin } = storeToRefs(useAuthStore());
 const { getSubclassBySlug } = useApiClass()
 const { data } = await getSubclassBySlug(route.params.materiSlug as string)
+
+// if not accessible, navigate to home
+if (!data.value?.data.isAccessible && !isSuperAdmin.value) {
+  navigateTo('/')
+}
 
 const subClass = computed(() => data.value?.data) as unknown as Ref<SubClassData>
 

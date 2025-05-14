@@ -6,12 +6,14 @@ export default defineEventHandler(async (event: H3Event) => {
   if (!slug) {
     throw createError({ statusCode: 400, statusMessage: "slug is required" });
   }
+  const userId = event.context.auth?.userId;
 
   const existingSubClass = await useDrizzle().query.subClassTable.findFirst({
     where: eq(tables.subClassTable.slug, slug),
     with: {
       class: {
         columns: {
+          id: true,
           slug: true,
           title: true,
         },
@@ -26,6 +28,20 @@ export default defineEventHandler(async (event: H3Event) => {
     })
   }
 
+  let isAccessible = false;
+
+  if (userId) {
+    const accessRecord = await useDrizzle().query.userClassAccess.findFirst({
+      where: and(
+        eq(tables.userClassAccess.userId, userId),
+        eq(tables.userClassAccess.classId, existingSubClass.classId),
+        eq(tables.userClassAccess.status, "ACTIVE")
+      ),
+    });
+
+    isAccessible = !!accessRecord;
+  }
+
   // Fetch the slug of the next subclass with the same class_id and orderIndex + 1
   const nextSubClass = await useDrizzle().query.subClassTable.findFirst({
     where: and(
@@ -35,5 +51,5 @@ export default defineEventHandler(async (event: H3Event) => {
     columns: { slug: true }, // Only fetch the slug
   });
 
-  return ApiResponseFormatter(200, "Success get class", {...existingSubClass, nextSubClassSlug: nextSubClass?.slug || null})
+  return ApiResponseFormatter(200, "Success get class", { ...existingSubClass, isAccessible, nextSubClassSlug: nextSubClass?.slug || null })
 })

@@ -27,6 +27,10 @@ defineProps({
   addDataUrl: {
     type: String,
     default: ''
+  },
+  showSearch: {
+    type: Boolean,
+    default :true
   }
 })
 
@@ -45,7 +49,7 @@ watch(searchQuery, value => {
       <p-subheading v-if="subTitle" size="sm">{{ subTitle }}</p-subheading>
     </div>
     <div class="table-header__search">
-      <p-input class="w-full" :placeholder="searchPlaceholder" v-model="searchQueryRef">
+      <p-input v-if="showSearch" class="w-full" :placeholder="searchPlaceholder" v-model="searchQueryRef">
         <template #append>
           <p-spinner v-if="status === 'pending'" />
           <pi-search20 v-else />

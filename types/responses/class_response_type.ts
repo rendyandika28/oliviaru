@@ -10,6 +10,9 @@ export interface ClassData {
   subclasses: SubClassData[]
   createdAt: string
   updateAt: string
+  accessExpiresAt?: string
+  accessGranted?: boolean
+  accessStatus?: string
 }
 
 export interface SubClassData {
