@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import PilPadlockSpot from '@privyid/persona-ilustration/vue/padlock/spot.vue'
+import PilPadlockSpot from '@privyid/persona-ilustration/vue/padlock/spot.vue';
 import { useApiClass } from "~/composables/api/useApiClass";
 import type { ClassData } from "~/types/responses/class_response_type";
 
 const route = useRoute();
 const router = useRouter();
+
+const goBack = () => {
+  router.back()
+}
 
 const { user, isSuperAdmin } = storeToRefs(useAuthStore());
 const { getBySlug } = useApiClass();
@@ -37,9 +41,9 @@ useHead({
 <template>
   <section class="my-4 space-y-8">
     <div class="flex flex-row gap-4 items-center">
-      <NuxtLink to="/class">
+      <p-button icon variant="link" @click="goBack">
         <p-button variant="link" class="text-base-black" size="xs" icon pill><pi-chevron-circle-left-24 /></p-button>
-      </NuxtLink>
+      </p-button>
       <p-heading class="font-bold" element="h5">{{
         classItem?.title
       }}</p-heading>

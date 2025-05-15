@@ -1,6 +1,7 @@
 export const API_ENDPOINT = {
-  AUTH: {
-    ME: '/api/v1/me'
+  USER: {
+    ME: '/api/v1/me',
+    CLASS: '/api/v1/me/class'
   },
   ADMIN: {
     USER: '/api/v1/users',

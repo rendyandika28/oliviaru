@@ -15,6 +15,14 @@ export function useApiClass() {
     })
   }
 
+  const getAllByUser = (params?: Ref<Partial<{
+    searchQuery: string
+  }>>) => {
+    return useApi<ClassListResponse>(API_ENDPOINT.USER.CLASS, {
+      params
+    })
+  }
+
   const getBySlug = (slug: string) => {
     return useApi<ClassListResponse>(`${API_ENDPOINT.ADMIN.CLASS}/${slug}`)
   }
@@ -54,6 +62,7 @@ export function useApiClass() {
 
   return {
     getAll,
+    getAllByUser,
     getBySlug,
     getSubclassBySlug,
     createClass,
