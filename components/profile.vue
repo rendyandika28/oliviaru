@@ -27,10 +27,10 @@ const handleSignOut = () => {
       <NuxtLink class="flex flex-row gap-2 items-center" to="/internal/dashboard"><pi-home-16 />Internal Dashboard</NuxtLink>
     </p-dropdown-item>
     <p-dropdown-item>
-      <NuxtLink class="flex flex-row gap-2 items-center" to="/class"><pi-list-view-16 /> Daftar Kelas</NuxtLink>
+      <NuxtLink class="flex flex-row gap-2 items-center" to="/class"><pi-list-view-16 /> Daftar Semua Kelas</NuxtLink>
     </p-dropdown-item>
     <p-divider class="my-0"/>
-    <p-dropdown-item>
+    <p-dropdown-item v-if="user?.role === 'USER'">
       <NuxtLink class="flex flex-row gap-2 items-center" to="/class/me"><pi-video-camera-16 /> Kelas Saya</NuxtLink>
     </p-dropdown-item>
     <p-dropdown-item @click="handleSignOut"

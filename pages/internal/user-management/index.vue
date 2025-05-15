@@ -76,7 +76,7 @@ const handleUserPatchData = (value: any, userId: string, type: 'ROLE' | 'STATUS'
           v-model="user.userStatus" />
       </template>
       <template #cell(action)="{ item: user }">
-        <p-dropdown icon no-caret>
+        <p-dropdown v-if="user.role === 'USER'" icon no-caret>
           <template #button-content>
             <pi-menu-vertical-16 />
           </template>
