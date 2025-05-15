@@ -24,6 +24,7 @@ const errorMessages = {
   userPending: `Status akun anda masih PENDING`,
   multipleLogin: 'Dilarang login menggunakan lebih dari 1 device'
 };
+const isPendingUser = computed(() => query.error === 'userPending' || query.error === 'newUserPending')
 
 const errorMessage = query?.error ? errorMessages[query.error] : null;
 
@@ -49,9 +50,9 @@ const { signIn } = useAuth()
       <p-text>Masuk sekarang dan mulai perjalanan Anda sebagai baker!</p-text>
       <p-banner v-if="errorMessage" variant="danger">
         <div v-html="errorMessage"></div>
-        <div v-if="query.error === 'userPending'" class="mt-1 space-y-1">
-          <span>Klik tombol dibawah untuk hubungi admin</span>
-          <p-button @click="handleMessageAdmin" color="primary" size="xs">Hubungi admin</p-button>
+        <div v-if="isPendingUser" class="mt-1 space-y-2">
+          <span>Klik tombol dibawah untuk hubungi admin atau WA langsung ke <a :href="`tel:+${adminPhonenumber}`">+{{ adminPhonenumber }}</a></span>
+          <p-button class="block" @click="handleMessageAdmin" color="primary" size="xs">Hubungi admin</p-button>
         </div>
       </p-banner>
       <div class="flex flex-col gap-2 mb-20 my-4">
