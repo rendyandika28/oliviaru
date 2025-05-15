@@ -3,8 +3,14 @@ import { useApiClass } from '~/composables/api/useApiClass';
 import type { SubClassData } from '~/types/responses/class_response_type';
 
 const route = useRoute()
+const { isSuperAdmin } = storeToRefs(useAuthStore());
 const { getSubclassBySlug } = useApiClass()
 const { data } = await getSubclassBySlug(route.params.materiSlug as string)
+
+// if not accessible, navigate to home
+if (!data.value?.data.isAccessible && !isSuperAdmin.value) {
+  navigateTo('/')
+}
 
 const subClass = computed(() => data.value?.data) as unknown as Ref<SubClassData>
 
@@ -28,7 +34,7 @@ useHead({
         <p-button class="bg-base-black text-base-white mt-3">Kelas Selanjutnya</p-button>
       </NuxtLink>
     </div>
-    <VideoPlayer :src="subClass.videoUrl" />
+    <VideoPlayer :src="loadAssetStorage(subClass.videoUrl)" />
     <div class="flex flex-col gap-2">
       <p-heading transform="capitalize" weight="bold" element="h6">DESKRIPSI MATERI</p-heading>
       <hr class="border-2 border-base-black w-10" />

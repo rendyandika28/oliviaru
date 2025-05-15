@@ -24,6 +24,10 @@ const fields = reactive<{ accessorKey: string, text: string }[]>([
     accessorKey: 'status',
     text: 'Status'
   },
+  {
+    accessorKey: 'action',
+    text: ''
+  },
 ])
 
 const searchQuery = ref<string>('')
@@ -57,18 +61,27 @@ const handleUserPatchData = (value: any, userId: string, type: 'ROLE' | 'STATUS'
       <p-heading element="h5">User Management</p-heading>
       <hr class="w-14 border-t-4 border-base-black mt-2" />
     </div>
-    <custom-table v-model:search-query="searchQuery" search-placeholder="Cari user dengan nama atau email" :status="status" title="Daftar user" sub-title="Data dibawah merupakan daftar user yang telah terdaftar di website"
-      :fields="fields" :items="data?.data">
+    <custom-table v-model:search-query="searchQuery" search-placeholder="Cari user dengan nama atau email"
+      :status="status" title="Daftar user"
+      sub-title="Data dibawah merupakan daftar user yang telah terdaftar di website" :fields="fields"
+      :items="data?.data">
       <template #cell(image)="{ item: user }">
         <img :src="user?.image" :alt="user?.name" referrerPolicy="no-referrer" class="size-10 rounded-full" />
       </template>
       <template #cell(role)="{ item: user }">
-        <p-select @change="value => handleUserPatchData(value, user.id, 'ROLE')" :options="ROLES"
-          v-model="user.role" />
+        <p-select @change="value => handleUserPatchData(value, user.id, 'ROLE')" :options="ROLES" v-model="user.role" />
       </template>
       <template #cell(status)="{ item: user }">
         <p-select @change="value => handleUserPatchData(value, user.id, 'STATUS')" :options="USER_STATUS"
           v-model="user.userStatus" />
+      </template>
+      <template #cell(action)="{ item: user }">
+        <p-dropdown v-if="user.role === 'USER'" icon no-caret>
+          <template #button-content>
+            <pi-menu-vertical-16 />
+          </template>
+          <p-dropdown-item :href="`/internal/user-management/${user.id}`">Detail</p-dropdown-item>
+        </p-dropdown>
       </template>
     </custom-table>
   </section>

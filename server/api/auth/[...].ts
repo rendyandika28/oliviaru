@@ -47,11 +47,11 @@ export default NuxtAuthHandler({
             providerAccountId,
           }).execute();
 
-          return '/auth/login?error=newUserPending';
+          return `/auth/login?error=newUserPending&email=${user.email}`;
         }
 
         if (!existingUser || existingUser.userStatus === 'PENDING') {
-          return '/auth/login?error=userPending';
+          return `/auth/login?error=userPending&email=${user.email}`;
         }
 
         user.id = existingUser.id;

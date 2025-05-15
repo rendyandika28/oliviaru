@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', {
   },
   getters: {
     isAuthenticated: (state) => !!state.user,
+    isSuperAdmin: (state) => state.user?.role === 'SUPER_ADMIN'
   },
   actions: {
     setUser(user: UserData | null) {
@@ -24,7 +25,7 @@ export const useAuthStore = defineStore('auth', {
       const nuxtApp = useNuxtApp()
       try {
         const _fetch = useRequestFetch()
-        const { data } = await _fetch<unknown>(API_ENDPOINT.AUTH.ME, {
+        const { data } = await _fetch<unknown>(API_ENDPOINT.USER.ME, {
           headers: {
             "Authorization": `Bearer ${token}`,
             "X-Requested-With": "XMLHttpRequest",

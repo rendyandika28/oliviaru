@@ -1,6 +1,6 @@
 import { createId } from '@paralleldrive/cuid2';
 import { InferInsertModel, InferSelectModel, sql, relations } from 'drizzle-orm';
-import { mysqlEnum, mysqlTable, timestamp, varchar, int, text, uniqueIndex, index } from 'drizzle-orm/mysql-core';
+import { mysqlEnum, mysqlTable, timestamp, varchar, int, text, uniqueIndex, index, boolean } from 'drizzle-orm/mysql-core';
 
 export const RoleEnum = {
   USER: 'USER',
@@ -22,6 +22,13 @@ export const VideoStatusEnum = {
   UPLOADING: 'UPLOADING',
   UPLOADED: 'UPLOADED',
   FAILED: 'FAILED'
+} as const;
+
+// New enum for access status
+export const AccessStatusEnum = {
+  ACTIVE: 'ACTIVE',
+  EXPIRED: 'EXPIRED',
+  REVOKED: 'REVOKED'
 } as const;
 
 export const user = mysqlTable('user', {
@@ -82,15 +89,80 @@ export const subClassTable = mysqlTable('sub_class', {
   };
 });
 
+// New table for managing user access to classes
+export const userClassAccess = mysqlTable('user_class_access', {
+  id: varchar('id', { length: 128 }).primaryKey().$defaultFn(() => createId()),
+  userId: varchar('user_id', { length: 128 }).notNull().references(() => user.id, { onDelete: 'cascade' }),
+  classId: int('class_id').notNull().references(() => classTable.id, { onDelete: 'cascade' }),
+
+  // Duration in days
+  durationDays: int('duration_days').notNull(),
+
+  // Track when access was granted and when it expires
+  grantedAt: timestamp('granted_at').notNull().default(sql`CURRENT_TIMESTAMP`),
+  expiresAt: timestamp('expires_at').notNull(),
+
+  // Status of the access
+  status: mysqlEnum('status', Object.values(AccessStatusEnum)).notNull().default(AccessStatusEnum.ACTIVE),
+
+  // Admin who granted the access
+  grantedByUserId: varchar('granted_by_user_id', { length: 128 }).references(() => user.id),
+
+  // Notes for admin
+  notes: text('notes'),
+
+  // Notification settings
+  notificationSent: boolean('notification_sent').notNull().default(false),
+
+  createdAt: timestamp('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp('updated_at').notNull().default(sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`),
+}, (table) => {
+  return {
+    // Index for looking up access by user
+    userIdIndex: index('user_id_index').on(table.userId),
+    // Index for looking up access by class
+    classIdIndex: index('class_id_index').on(table.classId),
+    // Index for finding soon-to-expire or expired access
+    expiresAtIndex: index('expires_at_index').on(table.expiresAt),
+    // Unique constraint to prevent duplicate active access
+    userClassUnique: uniqueIndex('user_class_unique').on(
+      table.userId,
+      table.classId
+    )
+  };
+});
+
 // Define the relations
+export const userRelations = relations(user, ({ many }) => ({
+  classAccess: many(userClassAccess),
+  grantedAccess: many(userClassAccess, { relationName: 'grantedBy' })
+}));
+
 export const classRelations = relations(classTable, ({ many }) => ({
-  subClasses: many(subClassTable)
+  subClasses: many(subClassTable),
+  userAccess: many(userClassAccess)
 }));
 
 export const subClassRelations = relations(subClassTable, ({ one }) => ({
   class: one(classTable, {
     fields: [subClassTable.classId],
     references: [classTable.id]
+  })
+}));
+
+export const userClassAccessRelations = relations(userClassAccess, ({ one }) => ({
+  user: one(user, {
+    fields: [userClassAccess.userId],
+    references: [user.id]
+  }),
+  class: one(classTable, {
+    fields: [userClassAccess.classId],
+    references: [classTable.id]
+  }),
+  grantedBy: one(user, {
+    fields: [userClassAccess.grantedByUserId],
+    references: [user.id],
+    relationName: 'grantedBy'
   })
 }));
 
@@ -105,3 +177,6 @@ export type NewClass = InferInsertModel<typeof classTable>;
 
 export type SubClass = InferSelectModel<typeof subClassTable>;
 export type NewSubClass = InferInsertModel<typeof subClassTable>;
+
+export type UserClassAccess = InferSelectModel<typeof userClassAccess>;
+export type NewUserClassAccess = InferInsertModel<typeof userClassAccess>;

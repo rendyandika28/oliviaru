@@ -4,6 +4,8 @@ useHead({
   titleTemplate: titleChunk =>
     titleChunk ? `${titleChunk} • ${title}` : title,
 })
+const { status } = useAuth()
+const isAuthenticated = computed(() => status.value === 'authenticated')
 </script>
 
 <template>
@@ -14,7 +16,8 @@ useHead({
           <NuxtImg src="/assets/logo.png" class="w-24 md:w-32" />
         </NuxtLink>
       </header>
-      <Profile />
+      <Profile v-if="isAuthenticated"/>
+      <p-button v-else href="/auth/login" color="primary"><pi-sign-in-16 />Login</p-button>
     </div>
     <slot />
     <p-divider class="my-8" />

@@ -1,14 +1,23 @@
 <script setup>
 import videojs from 'video.js'
+import 'video.js/dist/video-js.css'
+
+const props = defineProps({
+  src: {
+    type: String,
+    required: true
+  }
+})
+
+const videoPlayer = ref(null)
+const isVideoErrorLoaded = ref(false)
 
 let player = null
-const videoPlayer = ref(null)
 
-const props = defineProps(['src'])
 onMounted(() => {
   player = videojs(videoPlayer.value, {
     controls: true,
-    autoplay: true,
+    autoplay: false,
     responsive: true,
     fluid: true,
     sources: [
@@ -16,29 +25,36 @@ onMounted(() => {
     ]
   })
 
-  // Enable quality switching (if available)
   player.ready(() => {
-    const qualityLevels = player.qualityLevels()
-    qualityLevels.on('change', () => {
-      // console.log(`Quality changed to: ${qualityLevels.selectedIndex}`)
+    const qualityLevels = player.qualityLevels?.()
+    qualityLevels?.on?.('change', () => {
+      // Handle quality change if needed
     })
   })
 })
 
-const isVideoErrorLoaded = ref(false)
 onBeforeUnmount(() => {
   if (player) {
     player.dispose()
+    player = null
   }
 })
 </script>
 
 <template>
-  <p-banner v-if="isVideoErrorLoaded" variant="danger" :dismissable="false">URL Video Tidak ditemukan</p-banner>
-  <video :autoplay="false" @canplay="isVideoErrorLoaded = false" @error="isVideoErrorLoaded = true" ref="videoPlayer" class="w-full video-js vjs-default-skin"
-    controls controlsList="nodownload" oncontextmenu="return false;" />
+  <div>
+    <p-banner v-if="isVideoErrorLoaded" variant="danger" :dismissable="false">
+      URL Video Tidak ditemukan
+    </p-banner>
+    <video
+      ref="videoPlayer"
+      class="w-full video-js vjs-default-skin"
+      :autoplay="false"
+      controls
+      controlsList="nodownload"
+      @canplay="isVideoErrorLoaded = false"
+      @error="isVideoErrorLoaded = true"
+      oncontextmenu="return false;"
+    />
+  </div>
 </template>
-
-<style>
-@import 'video.js/dist/video-js.css';
-</style>

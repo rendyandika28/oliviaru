@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@nuxtjs/google-fonts',
     '@sidebase/nuxt-auth',
+    'nuxt-scheduler',
     [
       '@pinia/nuxt',
       {
@@ -67,6 +68,10 @@ export default defineNuxtConfig({
     minioSecretKey: process.env.NUXT_MINIO_SECRET_KEY || '',
     minioBucket: process.env.NUXT_MINIO_BUCKET || '',
     minioRegion: process.env.NUXT_MINIO_REGION || '',
+    public: {
+      adminPhonenumber: process.env.NUXT_PUBLIC_ADMIN_PHONENUMBER || '',
+      minioBaseUrl: process.env.NUXT_MINIO_BASE_URL || '',
+    }
   },
   auth: {
     baseURL: process.env.NUXT_AUTH_ORIGIN || '',
