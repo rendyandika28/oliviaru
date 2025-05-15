@@ -36,7 +36,7 @@ const fileUrl = computed(() => fileToUrl(value?.value))
     </template>
     <p-input-file :error="!!errors.length" :readonly="readonly" :disabled="disabled" v-model="value"
       :accept="acceptFile" />
-    <img v-if="type === 'image' && value" :src="fileUrl" class="mt-4" />
+    <img v-if="type === 'image' && value" :src="loadAssetStorage(fileUrl)" class="mt-4" />
   </p-form-group>
 </template>
 <style lang="scss" scoped></style>

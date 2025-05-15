@@ -38,7 +38,7 @@ const { data } = await getAll(queryParams)
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div v-for="item in data?.data"
           class="shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] p-4 rounded flex flex-col gap-3">
-          <img :src="item.thumbnailUrl" alt="class-banner" class="aspect-video" />
+          <img :src="loadAssetStorage(item.thumbnailUrl)" alt="class-banner" class="aspect-video object-cover" />
           <p-heading element="h6" class="font-bold">{{ item.title }}</p-heading>
           <div class="truncate-html" v-html="item.description" />
           <NuxtLink :to="`/class/${item.slug}`">

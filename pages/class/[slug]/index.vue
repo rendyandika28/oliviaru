@@ -46,7 +46,7 @@ useHead({
       <p-divider class="border-2 border-base-black w-10 hidden md:block" />
     </div>
 
-    <img :src="classItem?.thumbnailUrl" alt="class-banner" class="h-72 rounded w-full object-cover" />
+    <img :src="loadAssetStorage(classItem?.thumbnailUrl)" alt="class-banner" class="h-72 rounded w-full object-cover" />
 
     <div class="flex flex-col gap-2">
       <p-heading transform="capitalize" weight="bold" element="h6">DESKRIPSI KELAS</p-heading>

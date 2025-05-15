@@ -67,7 +67,7 @@ const { value, errorMessage } = useField<string>(toRef(props, "name"), undefined
 
   <!-- Handle preview video -->
   <div v-if="type === 'video' && value">
-    <VideoPlayer :key="value" :src="value" />
+    <VideoPlayer :key="value" :src="loadAssetStorage(value)" />
   </div>
 </template>
 <style lang="scss" scoped></style>

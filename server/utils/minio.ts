@@ -48,9 +48,7 @@ export const uploadFile = async (fileStream: Readable, fileName: string, content
     'Content-Type': contentType
   });
 
-  // Generate URL for the uploaded file
-  const baseUrl = useRuntimeConfig().minioBaseUrl
-  return `${baseUrl}/${bucketName}/${fileName}`;
+  return `${bucketName}/${fileName}`;
 };
 
 /**

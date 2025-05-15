@@ -34,7 +34,7 @@ useHead({
         <p-button class="bg-base-black text-base-white mt-3">Kelas Selanjutnya</p-button>
       </NuxtLink>
     </div>
-    <VideoPlayer :src="subClass.videoUrl" />
+    <VideoPlayer :src="loadAssetStorage(subClass.videoUrl)" />
     <div class="flex flex-col gap-2">
       <p-heading transform="capitalize" weight="bold" element="h6">DESKRIPSI MATERI</p-heading>
       <hr class="border-2 border-base-black w-10" />

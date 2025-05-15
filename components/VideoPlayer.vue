@@ -14,9 +14,6 @@ const isVideoErrorLoaded = ref(false)
 
 let player = null
 
-const config = useRuntimeConfig()
-const videoUrl = computed(() => `${config.public.minioBaseUrl}/${props.src}`)
-
 onMounted(() => {
   player = videojs(videoPlayer.value, {
     controls: true,
@@ -24,7 +21,7 @@ onMounted(() => {
     responsive: true,
     fluid: true,
     sources: [
-      { src: videoUrl.value, label: 'Master', type: 'application/x-mpegURL' }
+      { src: props.src, label: 'Master', type: 'application/x-mpegURL' }
     ]
   })
 
