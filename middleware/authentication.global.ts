@@ -8,6 +8,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo('/')
   }
 
+
+  if (status.value === 'unauthenticated' && to.path !== '/auth/login') {
+    return navigateTo('/auth/login')
+  }
+
   // Return immediately if user is already authenticated
   if (status.value === 'authenticated') {
     // Check if user is not SUPER_ADMIN and trying to access internal routes

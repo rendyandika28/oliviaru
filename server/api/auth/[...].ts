@@ -67,6 +67,11 @@ export default NuxtAuthHandler({
         return null;
       }
 
+      if (token?.accessTokenExpires && Date.now() > token.accessTokenExpires) {
+        // Optionally you could trigger re-auth or cleanup
+        return null;
+      }
+
       if (session?.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
