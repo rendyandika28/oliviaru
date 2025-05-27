@@ -14,8 +14,4 @@ export default defineNitroPlugin(() => {
     console.log('[scheduler] Running expireUserAccesses job...')
     await updateExpiredAccesses()
   }).cron('0 0 * * *') // Runs every day at midnight
-
-  scheduler.run(async () => {
-    console.log('[scheduler] Running job...')
-  }).cron('* * * * * *') // Runs every second
 })
