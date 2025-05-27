@@ -25,7 +25,7 @@ const isAuthenticated = computed(() => status.value === 'authenticated')
       <div class="flex flex-col gap-8 flex-1">
         <NuxtImg src="/assets/logo.png" class="w-24 md:w-32" />
         <p-text variant="subheading2">
-          Perumahan Dalem Maguwo Asri no.C5, Demangan, Maguwoharjo, Kec. Depok, Kabupaten Sleman, Daerah Istimewa
+          Perumahan Dalem Maguwo Asri no.C1, Demangan, Maguwoharjo, Kec. Depok, Kabupaten Sleman, Daerah Istimewa
           Yogyakarta 55282
         </p-text>
         <div class="flex flex-row gap-4">
