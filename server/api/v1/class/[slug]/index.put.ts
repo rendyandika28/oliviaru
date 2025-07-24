@@ -119,6 +119,24 @@ export default defineEventHandler(async (event: H3Event) => {
             updateData.videoStatus = VideoStatusEnum.UPLOADED
           }
 
+          // 🆕 Process attachment if provided
+          if (subClass.attachment_url && typeof subClass.attachment_url !== 'string') {
+            const attachmentFile = subClass.attachment_url;
+            const attachmentStream = createReadStream(attachmentFile.filepath);
+            const attachmentFileName = `attachments/${createId()}-${attachmentFile.originalFilename}`;
+
+            // Upload to MinIO
+            const attachmentUrl = await uploadFile(attachmentStream, attachmentFileName, attachmentFile.mimetype);
+            updateData.attachmentUrl = attachmentUrl;
+
+            // Optional: Delete old attachment
+            const existingSub = existingClass.subClasses.find(s => s.id === Number(subClass.id));
+            if (existingSub?.attachmentUrl) {
+              const oldPath = existingSub.attachmentUrl.replace(`${useRuntimeConfig().minioBaseUrl}/${useRuntimeConfig().minioBucket}`, "")
+              await deleteFile(oldPath)
+            }
+          }
+
           await tx.update(tables.subClassTable)
             .set(updateData)
             .where(eq(tables.subClassTable.id, Number(subClass.id)))
@@ -126,6 +144,16 @@ export default defineEventHandler(async (event: H3Event) => {
           // Create new subclass
           const subClassSlug = slugify(`${subClass.title}-${createId()}`, { lower: true })
           let videoStatus = VideoStatusEnum.UPLOADED
+          let attachmentUrl = null
+
+          // 🆕 Handle new attachment if exists
+          if (subClass.attachment_url && typeof subClass.attachment_url !== 'string') {
+            const attachmentFile = subClass.attachment_url;
+            const attachmentStream = createReadStream(attachmentFile.filepath);
+            const attachmentFileName = `attachments/${createId()}-${attachmentFile.originalFilename}`;
+
+            attachmentUrl = await uploadFile(attachmentStream, attachmentFileName, attachmentFile.mimetype);
+          }
 
           await tx.insert(tables.subClassTable).values({
             title: subClass.title,
@@ -134,6 +162,7 @@ export default defineEventHandler(async (event: H3Event) => {
             orderIndex,
             videoUrl: subClass?.video_url,
             videoStatus,
+            attachmentUrl,
             classId: existingClass.id
           })
         }
