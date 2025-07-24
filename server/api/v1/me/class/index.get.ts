@@ -27,8 +27,6 @@ export default defineEventHandler(async (event: H3Event) => {
     ))
     .execute();
 
-  console.log({ count });
-
 
   // Fetch paginated and filtered classes
   const results = await useDrizzle()

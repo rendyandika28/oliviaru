@@ -9,7 +9,7 @@ const props = defineProps({
     default: ""
   },
   type: {
-    type: String as PropType<'image' | 'video'>,
+    type: String,
     default: "image",
   },
   required: {
@@ -26,7 +26,7 @@ const props = defineProps({
   },
 })
 const { value, errorMessage, errors } = useField<string>(toRef(props, "name"), undefined);
-const acceptFile = computed(() => props.type === 'image' ? 'image/*' : 'video/*')
+const acceptFile = computed(() => props.type)
 const fileUrl = computed(() => fileToUrl(value?.value))
 </script>
 <template>
@@ -36,7 +36,8 @@ const fileUrl = computed(() => fileToUrl(value?.value))
     </template>
     <p-input-file :error="!!errors.length" :readonly="readonly" :disabled="disabled" v-model="value"
       :accept="acceptFile" />
-    <img v-if="type === 'image' && value" :src="loadAssetStorage(fileUrl)" class="mt-4" />
+    <img v-if="type === 'image/*' && value" :src="loadAssetStorage(fileUrl)" class="mt-4" />
+    <embed v-if="type === 'application/pdf' && value" :src="loadAssetStorage(fileUrl)" class="w-full h-[500px] mt-4"/>
   </p-form-group>
 </template>
 <style lang="scss" scoped></style>

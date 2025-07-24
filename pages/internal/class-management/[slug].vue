@@ -28,7 +28,8 @@ const rawValue = computed<FormData>(() => {
       id: sub.id,
       title: sub.title,
       description: sub.description,
-      video_url: sub.videoUrl
+      video_url: sub.videoUrl,
+      attachment_url: sub.attachmentUrl,
     })),
   };
 })

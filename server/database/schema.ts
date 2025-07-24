@@ -74,6 +74,7 @@ export const subClassTable = mysqlTable('sub_class', {
   description: text('description'),
   orderIndex: int('order_index').notNull(),
   videoUrl: text('video_url'),
+  attachmentUrl: text('attachment_url'),
   videoStatus: mysqlEnum('video_status', Object.values(VideoStatusEnum)).default(VideoStatusEnum.UPLOADING),
   thumbnailUrl: text('thumbnail_url'),
   classId: int('class_id').notNull().references(() => classTable.id, { onDelete: 'cascade' }),

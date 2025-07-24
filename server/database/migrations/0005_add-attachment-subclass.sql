@@ -1,0 +1,1 @@
+ALTER TABLE `sub_class` ADD `attachment_url` text;

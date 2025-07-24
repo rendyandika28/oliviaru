@@ -6,10 +6,6 @@ import type { ClassData } from "~/types/responses/class_response_type";
 const route = useRoute();
 const router = useRouter();
 
-const goBack = () => {
-  router.back()
-}
-
 const { user, isSuperAdmin } = storeToRefs(useAuthStore());
 const { getBySlug } = useApiClass();
 const { adminPhonenumber } = useRuntimeConfig().public
@@ -41,7 +37,7 @@ useHead({
 <template>
   <section class="my-4 space-y-8">
     <div class="flex flex-row gap-4 items-center">
-      <p-button icon variant="link" @click="goBack">
+      <p-button icon variant="link" @click="router.push('/class')">
         <p-button variant="link" class="text-base-black" size="xs" icon pill><pi-chevron-circle-left-24 /></p-button>
       </p-button>
       <p-heading class="font-bold" element="h5">{{

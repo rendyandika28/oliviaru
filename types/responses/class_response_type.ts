@@ -24,6 +24,7 @@ export interface SubClassData {
   videoUrl: string
   videoStatus: string
   thumbnailUrl: string
+  attachmentUrl: string
   classId: number
   createdAt: string
   updatedAt: string

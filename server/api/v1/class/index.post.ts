@@ -61,12 +61,24 @@ export default defineEventHandler(async (event: H3Event) => {
         // Process subclass video if exists
         let videoStatus = VideoStatusEnum.UPLOADED;
 
+        // Process attachment file if exists
+        let attachmentUrl = null;
+        if (subClass?.attachment_url) {
+          const attachmentFile = subClass?.attachment_url;
+          const attachmentStream = createReadStream(attachmentFile.filepath);
+          const attachmentFileName = `attachments/${createId()}-${attachmentFile.originalFilename}`;
+
+          // Upload to MinIO
+          attachmentUrl = await uploadFile(attachmentStream, attachmentFileName, attachmentFile.mimetype);
+        }
+
         return {
           title: subClass.title,
           slug: subClassSlug,
           description: subClass.description,
           orderIndex: index + 1,
           videoUrl: subClass?.video_url,
+          attachmentUrl,
           videoStatus,
           classId: Number(insertId[0].id),
         };

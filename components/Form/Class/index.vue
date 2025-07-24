@@ -39,7 +39,7 @@ const onSubmit = handleSubmit(finalValues => emit('submit', finalValues))
         <app-rich-text label="Deskripsi Kelas" name="description" />
       </div>
       <div>
-        <app-input-file label="Thumbnail Kelas" name="thumbnail_url" type="image" />
+        <app-input-file label="Thumbnail Kelas" name="thumbnail_url" type="image/*" />
       </div>
     </div>
 
@@ -76,8 +76,9 @@ const onSubmit = handleSubmit(finalValues => emit('submit', finalValues))
                     <app-text-input label="Judul Materi" :name="`subclasses[${index}].title`" />
                     <app-rich-text label="Deskripsi Materi" :name="`subclasses[${index}].description`" />
                   </div>
-                  <div>
+                  <div class="space-y-4">
                     <app-text-input label="URL Video" :name="`subclasses[${index}].video_url`" type="video" />
+                    <app-input-file label="File Resep" :name="`subclasses[${index}].attachment_url`" type="application/pdf"/>
                   </div>
                 </div>
               </app-collapsible>

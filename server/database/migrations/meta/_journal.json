@@ -36,6 +36,13 @@
       "when": 1747148162575,
       "tag": "0004_ordinary_layla_miller",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1753011644432,
+      "tag": "0005_add-attachment-subclass",
+      "breakpoints": true
     }
   ]
 }
