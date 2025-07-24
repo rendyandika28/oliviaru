@@ -25,3 +25,104 @@ cat > hls_output/master.m3u8 << EOF
 EOF
 
 echo "HLS transcoding complete. Master playlist created at hls_output/master.m3u8"
+
+
+# /////////////////////////////////////////////////////////////// /////////////////////////////////////////////////////////////// /////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////////////
+please help me with command terminal,
+
+my current directory have a bunch of file video, i want to create a folder base on the video name, make the folder name kebab-case, and move that spesific video to each folder, after moving to each folder, rename the video into video.mp4, after renaming, run this command below for each video in that folder, after running the command below, remove the video.mp4 file
+
+# Create the output directory if it doesn't exist
+mkdir -p hls_output
+
+# Generate the variant streams for 360p and 720p
+ffmpeg -i video.mp4 \
+  -map 0:v:0 -map 0:a:0 -vf "scale=640:360" -c:v libx264 -crf 23 -preset faster -c:a aac -b:a 96k -ac 2 -profile:v baseline -level 3.0 -start_number 0 -hls_time 2 -hls_list_size 0 -f hls -hls_segment_filename "360p_%03d.ts" 360p.m3u8 \
+  -map 0:v:0 -map 0:a:0 -vf "scale=1280:720" -c:v libx264 -crf 23 -preset faster -c:a aac -b:a 128k -ac 2 -profile:v baseline -level 3.0 -start_number 0 -hls_time 2 -hls_list_size 0 -f hls -hls_segment_filename "720p_%03d.ts" 720p.m3u8
+
+# Create the master playlist
+cat > master.m3u8 << EOF
+#EXTM3U
+#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360
+360p.m3u8
+#EXT-X-STREAM-INF:BANDWIDTH=1500000,RESOLUTION=1280x720
+720p.m3u8
+EOF
+
+echo "HLS transcoding complete. Master playlist created at hls_output/master.m3u8"
+
+
+
+# Command
+
+#!/bin/bash
+
+for file in *.mp4; do
+  # Skip if not a file
+  [ -f "$file" ] || continue
+
+  # Get filename without extension
+  filename="${file%.*}"
+
+  # Convert to kebab-case
+  kebab_case=$(echo "$filename" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | sed -E 's/^-+|-+$//g')
+
+  # Create folder and move the video
+  mkdir -p "$kebab_case"
+  mv "$file" "$kebab_case/video.mp4"
+  cd "$kebab_case" || continue
+
+  # Run FFmpeg command
+  ffmpeg -i video.mp4 \
+    -map 0:v:0 -map 0:a:0 -vf "scale=640:360" -c:v libx264 -crf 23 -preset faster -c:a aac -b:a 96k -ac 2 -profile:v baseline -level 3.0 -start_number 0 -hls_time 2 -hls_list_size 0 -f hls -hls_segment_filename "360p_%03d.ts" 360p.m3u8 \
+    -map 0:v:0 -map 0:a:0 -vf "scale=1280:720" -c:v libx264 -crf 23 -preset faster -c:a aac -b:a 128k -ac 2 -profile:v baseline -level 3.0 -start_number 0 -hls_time 2 -hls_list_size 0 -f hls -hls_segment_filename "720p_%03d.ts" 720p.m3u8
+
+  # Create master playlist
+  cat > master.m3u8 << EOF
+#EXTM3U
+#EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360
+360p.m3u8
+#EXT-X-STREAM-INF:BANDWIDTH=1500000,RESOLUTION=1280x720
+720p.m3u8
+EOF
+
+  echo "✅ HLS transcoding complete for $file → $kebab_case/master.m3u8"
+
+  # Remove the original video
+  rm -f video.mp4
+
+  # Back to the original directory
+  cd ..
+done
+
+
+# create folder name
+#!/bin/bash
+
+output="data.json"
+echo "[" > "$output"
+
+first=true
+for dir in */; do
+  # Strip trailing slash
+  folder="${dir%/}"
+
+  # Skip non-directories
+  [ -d "$folder" ] || continue
+
+  # Convert kebab-case to normal case (title case)
+  judul=$(echo "$folder" | sed -E 's/-/ /g' | sed -E 's/\b(.)/\U\1/g')
+
+  # Add comma if not the first entry
+  if [ "$first" = true ]; then
+    first=false
+  else
+    echo "," >> "$output"
+  fi
+
+  # Write JSON object
+  echo "  {\"url\": \"$folder\", \"judul\": \"$judul\"}" >> "$output"
+done
+
+echo "]" >> "$output"
+echo "✅ JSON written to $output"
