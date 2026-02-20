@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/mysql2';
 import type { MySql2Database } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
-export { sql, eq, and, or } from 'drizzle-orm';
+export { sql, eq, and, or, like, desc, asc, lt, gt, gte, lte, not, inArray, count } from 'drizzle-orm';
 import * as schema from '../database/schema';
 
 // Create a connection pool
@@ -27,6 +27,3 @@ export function useDrizzle(): MySql2Database<typeof schema> {
   return db;
 }
 
-// Export your types
-// Export your types using the InferSelectModel and InferInsertModel
-export type { User, NewUser } from '../database/schema';

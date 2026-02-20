@@ -23,7 +23,7 @@ const route = useRoute()
 
 const searchQuery = ref<string>('')
 const { user: loggedInUser } = storeToRefs(useAuthStore())
-const { getUser, onUserModifyAccessClass } = useApiUser()
+const { getUser, modifyClassAccess } = useApiUser()
 const { data, status, refresh } = await getUser(route.params.id as string)
 
 const user = computed(() => data.value?.data)
@@ -41,7 +41,7 @@ const getExpiredAtUser = (date: string) => {
   return `${formattedDate} (Tersisa ${daysRemaining} hari lagi)`;
 };
 const handleModifyAccessClass = async (classId: string, action: AccessAction) => {
-  const response = await onUserModifyAccessClass(route.params.id as string, classId, {
+  const response = await modifyClassAccess(route.params.id as string, classId, {
     action,
     grantedByUserId: loggedInUser.value?.id
   })

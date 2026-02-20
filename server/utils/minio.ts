@@ -1,60 +1,74 @@
-// Configure S3 client for MinIO
 import { Client } from 'minio';
 import { Readable } from 'stream';
 
-export const minioClient = new Client({
-  endPoint: useRuntimeConfig().minioEndpoint || '',
-  useSSL: Boolean(useRuntimeConfig().minioSSL) || false,
-  accessKey: useRuntimeConfig().minioAccessKey || '',
-  secretKey: useRuntimeConfig().minioSecretKey || '',
-  region: useRuntimeConfig().minioRegion || 'us-east-1'
-});
+let _client: Client | null = null;
+let _bucketName: string = '';
+let _initialized = false;
 
-export const bucketName = useRuntimeConfig().minioBucket || '';
+function getMinioClient(): Client {
+  if (!_client) {
+    const config = useRuntimeConfig();
+    _client = new Client({
+      endPoint: config.minioEndpoint || '',
+      useSSL: config.minioSSL === 'true',
+      accessKey: config.minioAccessKey || '',
+      secretKey: config.minioSecretKey || '',
+      region: config.minioRegion || 'us-east-1',
+    });
+    _bucketName = config.minioBucket || '';
+  }
+  return _client;
+}
 
-// Ensure bucket exists
-const initializeBucket = async () => {
-  const exists = await minioClient.bucketExists(bucketName);
+function getBucketName(): string {
+  if (!_bucketName) {
+    getMinioClient();
+  }
+  return _bucketName;
+}
+
+async function ensureBucket(): Promise<void> {
+  if (_initialized) return;
+  const client = getMinioClient();
+  const bucket = getBucketName();
+  const exists = await client.bucketExists(bucket);
   if (!exists) {
-    await minioClient.makeBucket(bucketName, process.env.MINIO_REGION || 'us-east-1');
-    // Make the bucket public
+    await client.makeBucket(bucket, useRuntimeConfig().minioRegion || 'us-east-1');
     const policy = {
       Version: '2012-10-17',
-      Statement: [
-        {
-          Effect: 'Allow',
-          Principal: { AWS: ['*'] },
-          Action: ['s3:GetObject'],
-          Resource: [`arn:aws:s3:::${bucketName}/*`]
-        }
-      ]
+      Statement: [{
+        Effect: 'Allow',
+        Principal: { AWS: ['*'] },
+        Action: ['s3:GetObject'],
+        Resource: [`arn:aws:s3:::${bucket}/*`],
+      }],
     };
-    await minioClient.setBucketPolicy(bucketName, JSON.stringify(policy));
+    await client.setBucketPolicy(bucket, JSON.stringify(policy));
   }
-};
+  _initialized = true;
+}
 
-// Initialize bucket on server start
-initializeBucket().catch(console.error);
-
-/**
- * Upload a file to MinIO
- * @param fileStream - The file stream to upload
- * @param fileName - The name to give the file in MinIO
- * @param contentType - The content type of the file
- * @returns - The URL of the uploaded file
- */
-export const uploadFile = async (fileStream: Readable, fileName: string, contentType: string): Promise<string> => {
-  await minioClient.putObject(bucketName, fileName, fileStream, undefined, {
-    'Content-Type': contentType
+export const uploadFile = async (
+  fileStream: Readable,
+  fileName: string,
+  contentType: string
+): Promise<string> => {
+  await ensureBucket();
+  const client = getMinioClient();
+  const bucket = getBucketName();
+  await client.putObject(bucket, fileName, fileStream, undefined, {
+    'Content-Type': contentType,
   });
-
-  return `${bucketName}/${fileName}`;
+  return `${bucket}/${fileName}`;
 };
 
-/**
- * Delete a file from MinIO
- * @param fileName - The name of the file to delete
- */
 export const deleteFile = async (fileName: string): Promise<void> => {
-  await minioClient.removeObject(bucketName, fileName);
+  await ensureBucket();
+  const client = getMinioClient();
+  const bucket = getBucketName();
+  await client.removeObject(bucket, fileName);
+};
+
+export const deleteFiles = async (fileNames: string[]): Promise<void> => {
+  await Promise.allSettled(fileNames.map((f) => deleteFile(f)));
 };

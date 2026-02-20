@@ -1,65 +1,39 @@
-import { H3Event } from "h3";
+import { H3Event } from 'h3';
 import { getServerSession } from '#auth';
-import { verifyAccessToken } from "~/utils/auth";
-import { UserToken } from "../database/schema";
+import { verifyAccessToken } from '~/utils/auth';
+
+const PUBLIC_ROUTES: Array<{ path: string; methods?: string[] }> = [
+  { path: '/api/v1/class', methods: ['GET'] },
+  { path: '/api/v1/subclass', methods: ['GET'] },
+];
+
+function isPublicRoute(pathname: string, method: string): boolean {
+  return PUBLIC_ROUTES.some((route) => {
+    const pathMatch = pathname === route.path || pathname.startsWith(route.path + '/');
+    const methodMatch = !route.methods || route.methods.includes(method.toUpperCase());
+    return pathMatch && methodMatch;
+  });
+}
 
 export default defineEventHandler(async (event: H3Event) => {
-  const requestUrl = getRequestURL(event);
-  const isApiRouting = requestUrl.pathname.includes('/api/v1');
-  const publicRouting = ['/api/v1/class'];
+  const url = getRequestURL(event);
+  const method = getMethod(event);
 
-  // Only proceed if route is under /api/v1
-  if (!isApiRouting) return;
+  if (!url.pathname.startsWith('/api/v1')) return;
 
   const session = await getServerSession(event);
-  const accessToken = session?.accessToken
+  const accessToken = session?.accessToken;
 
-  // If user has accessToken, always verify it — even on public routes
   if (accessToken) {
     const decoded = verifyAccessToken(accessToken);
-
     if (!decoded) {
-      return sendError(event, {
-        statusCode: 401,
-        statusMessage: "Unauthorized: Invalid token",
-        name: "",
-        message: ""
-      });
+      throw createError({ statusCode: 401, statusMessage: 'Unauthorized: Invalid or expired token' });
     }
-
-    const existingToken = await useDrizzle().query.userToken.findFirst({
-      where: eq(tables.userToken.token, accessToken)
-    }) as unknown as UserToken;
-
-    if (!existingToken) {
-      return sendError(event, {
-        statusCode: 401,
-        statusMessage: "Unauthorized: Token not found",
-        name: "",
-        message: ""
-      });
-    }
-
-    if (new Date(existingToken?.expiresAt) < new Date()) {
-      return sendError(event, {
-        statusCode: 401,
-        statusMessage: "Unauthorized: Token expired",
-        name: "",
-        message: ""
-      });
-    }
-
-    // Attach userId to event.context.auth
     event.context.auth = { userId: decoded.userId };
+    return;
   }
 
-  // If not a public route and no token, reject
-  if (!accessToken && !publicRouting.some(route => requestUrl.pathname.startsWith(route))) {
-    return sendError(event, {
-      statusCode: 401,
-      statusMessage: "Unauthorized: Missing token",
-      name: "",
-      message: ""
-    });
+  if (!isPublicRoute(url.pathname, method)) {
+    throw createError({ statusCode: 401, statusMessage: 'Unauthorized: Authentication required' });
   }
 });

@@ -1,35 +1,22 @@
 import { createId } from '@paralleldrive/cuid2';
-import { InferInsertModel, InferSelectModel, sql, relations } from 'drizzle-orm';
+import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
+import { sql, relations } from 'drizzle-orm';
 import { mysqlEnum, mysqlTable, timestamp, varchar, int, text, uniqueIndex, index, boolean } from 'drizzle-orm/mysql-core';
+import {
+  RoleEnum,
+  UserStatusEnum,
+  ClassStatusEnum,
+  VideoStatusEnum,
+  AccessStatusEnum,
+} from '~/shared/enums';
 
-export const RoleEnum = {
-  USER: 'USER',
-  SUPER_ADMIN: 'SUPER_ADMIN'
-} as const;
+export { RoleEnum, UserStatusEnum, ClassStatusEnum, VideoStatusEnum, AccessStatusEnum };
 
-export const UserStatusEnum = {
-  PENDING: 'PENDING',
-  REGISTERED: 'REGISTERED',
-} as const;
-
-// Define enums
-export const ClassStatusEnum = {
-  DRAFT: 'DRAFT',
-  PUBLISHED: 'PUBLISHED'
-} as const;
-
-export const VideoStatusEnum = {
-  UPLOADING: 'UPLOADING',
-  UPLOADED: 'UPLOADED',
-  FAILED: 'FAILED'
-} as const;
-
-// New enum for access status
-export const AccessStatusEnum = {
-  ACTIVE: 'ACTIVE',
-  EXPIRED: 'EXPIRED',
-  REVOKED: 'REVOKED'
-} as const;
+// Helper to satisfy drizzle's [string, ...string[]] tuple requirement
+function enumValues<T extends Record<string, string>>(obj: T): [string, ...string[]] {
+  const values = Object.values(obj);
+  return [values[0], ...values.slice(1)];
+}
 
 export const user = mysqlTable('user', {
   id: varchar('id', { length: 128 }).primaryKey().$defaultFn(() => createId()),
@@ -39,8 +26,8 @@ export const user = mysqlTable('user', {
   image: varchar('image', { length: 255 }),
   provider: varchar('provider', { length: 255 }),
   providerAccountId: varchar('provider_account_id', { length: 255 }),
-  role: mysqlEnum('role', Object.values(RoleEnum)).notNull().default(RoleEnum.USER),
-  userStatus: mysqlEnum('user_status', Object.values(UserStatusEnum)).notNull().default(UserStatusEnum.PENDING),
+  role: mysqlEnum('role', enumValues(RoleEnum)).notNull().default(RoleEnum.USER),
+  userStatus: mysqlEnum('user_status', enumValues(UserStatusEnum)).notNull().default(UserStatusEnum.PENDING),
 
   createdAt: timestamp('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at').notNull().default(sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`),
@@ -60,7 +47,7 @@ export const classTable = mysqlTable('class', {
   slug: varchar('slug', { length: 255 }).notNull().unique(),
   description: text('description'),
   thumbnailUrl: text('thumbnail_url'),
-  status: mysqlEnum('status', Object.values(ClassStatusEnum)).notNull().default(ClassStatusEnum.DRAFT),
+  status: mysqlEnum('status', enumValues(ClassStatusEnum)).notNull().default(ClassStatusEnum.DRAFT),
 
   createdAt: timestamp('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at').notNull().default(sql`CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP`),
@@ -75,7 +62,7 @@ export const subClassTable = mysqlTable('sub_class', {
   orderIndex: int('order_index').notNull(),
   videoUrl: text('video_url'),
   attachmentUrl: text('attachment_url'),
-  videoStatus: mysqlEnum('video_status', Object.values(VideoStatusEnum)).default(VideoStatusEnum.UPLOADING),
+  videoStatus: mysqlEnum('video_status', enumValues(VideoStatusEnum)).default(VideoStatusEnum.UPLOADING),
   thumbnailUrl: text('thumbnail_url'),
   classId: int('class_id').notNull().references(() => classTable.id, { onDelete: 'cascade' }),
 
@@ -104,7 +91,7 @@ export const userClassAccess = mysqlTable('user_class_access', {
   expiresAt: timestamp('expires_at').notNull(),
 
   // Status of the access
-  status: mysqlEnum('status', Object.values(AccessStatusEnum)).notNull().default(AccessStatusEnum.ACTIVE),
+  status: mysqlEnum('status', enumValues(AccessStatusEnum)).notNull().default(AccessStatusEnum.ACTIVE),
 
   // Admin who granted the access
   grantedByUserId: varchar('granted_by_user_id', { length: 128 }).references(() => user.id),

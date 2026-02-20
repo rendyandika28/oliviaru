@@ -1,44 +1,37 @@
-<script setup>
-import videojs from 'video.js'
-import 'video.js/dist/video-js.css'
+<script setup lang="ts">
+import videojs from 'video.js';
+import type Player from 'video.js/dist/types/player';
+import 'video.js/dist/video-js.css';
 
-const props = defineProps({
-  src: {
-    type: String,
-    required: true
-  }
-})
+const props = defineProps<{
+  src: string;
+}>();
 
-const videoPlayer = ref(null)
-const isVideoErrorLoaded = ref(false)
+const videoPlayer = ref<HTMLVideoElement | null>(null);
+const isVideoErrorLoaded = ref(false);
 
-let player = null
+let player: Player | null = null;
 
 onMounted(() => {
+  if (!videoPlayer.value) return;
+
   player = videojs(videoPlayer.value, {
     controls: true,
     autoplay: false,
     responsive: true,
     fluid: true,
     sources: [
-      { src: props.src, label: 'Master', type: 'application/x-mpegURL' }
-    ]
-  })
-
-  player.ready(() => {
-    const qualityLevels = player.qualityLevels?.()
-    qualityLevels?.on?.('change', () => {
-      // Handle quality change if needed
-    })
-  })
-})
+      { src: props.src, label: 'Master', type: 'application/x-mpegURL' },
+    ],
+  });
+});
 
 onBeforeUnmount(() => {
   if (player) {
-    player.dispose()
-    player = null
+    player.dispose();
+    player = null;
   }
-})
+});
 </script>
 
 <template>

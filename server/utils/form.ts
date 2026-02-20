@@ -55,7 +55,6 @@ function processNestedFields(fields: Record<string, any>): Record<string, any> {
 
     if (nestedMatch) {
       const [, prefix, indexStr, property] = nestedMatch
-      const index = parseInt(indexStr, 10)
 
       if (!nestedFieldsMap.has(prefix)) {
         nestedFieldsMap.set(prefix, new Map())
@@ -93,7 +92,7 @@ function processNestedFields(fields: Record<string, any>): Record<string, any> {
 export const transformYupErrorsIntoObject = (errors: ValidationError): Record<string, string> => {
   const validationErrors: Record<string, string> = {}
 
-  errors.inner.forEach((error: any) => {
+  errors.inner.forEach((error) => {
     if (error.path !== undefined) {
       validationErrors[error.path] = error.errors[0]
     }

@@ -34,7 +34,7 @@ const { data } = await getAllByUser(queryParams)
           </NuxtLink>
         </div>
       </div>
-      <div else class="grid place-items-center h-60">
+      <div v-else class="grid place-items-center h-60">
         <div class="space-y-4 text-center">
           <p-subheading>Kamu belum memiliki kelas, lihat daftar kelas untuk mulai belajar.</p-subheading>
           <p-button href="/class">Daftar kelas</p-button>

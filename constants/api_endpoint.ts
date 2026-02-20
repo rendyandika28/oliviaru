@@ -1,7 +1,7 @@
 export const API_ENDPOINT = {
   USER: {
     ME: '/api/v1/me',
-    CLASS: '/api/v1/me/class'
+    CLASS: '/api/v1/me/class',
   },
   ADMIN: {
     USER: '/api/v1/users',
@@ -9,5 +9,4 @@ export const API_ENDPOINT = {
     SUBCLASS: '/api/v1/subclass',
     DASHBOARD: '/api/v1/dashboard',
   },
-  LANDING: {},
-} as const
+} as const;

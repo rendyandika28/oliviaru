@@ -17,7 +17,7 @@ if (!data.value?.data.isAccessible && !isSuperAdmin.value) {
   navigateTo('/')
 }
 
-const subClass = computed(() => data.value?.data) as unknown as Ref<SubClassData>
+const subClass = computed(() => data.value?.data)
 
 useHead({
   title: subClass.value.title,

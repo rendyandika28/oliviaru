@@ -3,8 +3,8 @@ import { AccessStatusEnum, userClassAccess } from '~/server/database/schema';
 
 export async function updateExpiredAccesses() {
   const now = new Date();
-  // Update all access records where `expires_at` < now AND status != EXPIRED
-  await useDrizzle().update(userClassAccess)
+  await useDrizzle()
+    .update(userClassAccess)
     .set({ status: AccessStatusEnum.EXPIRED })
     .where(
       and(

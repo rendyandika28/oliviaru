@@ -6,7 +6,7 @@ export interface PaginationMeta {
 }
 
 export interface ApiResponse<T = unknown> {
-  code: number
+  status: number
   data: T
   message: string
 }

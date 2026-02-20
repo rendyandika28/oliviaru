@@ -31,7 +31,7 @@ const fields = reactive<{ accessorKey: string, text: string }[]>([
 ])
 
 const searchQuery = ref<string>('')
-const { getAll, onUserPatchData } = useApiUser()
+const { getAll, patchUser } = useApiUser()
 const queryParams = ref({
   searchQuery,
   page: 1,
@@ -40,19 +40,19 @@ const queryParams = ref({
 
 const { data, status } = await getAll(queryParams)
 
-const handleUserPatchData = (value: any, userId: string, type: 'ROLE' | 'STATUS') => {
+const handleUserPatchData = (value: { text: string; value: string }, userId: string, type: 'ROLE' | 'STATUS') => {
   const body: Partial<{ role: string; status: string }> = {};
-  if (type === "ROLE") {
+  if (type === 'ROLE') {
     body.role = value.value;
-  } else if (type === "STATUS") {
+  } else if (type === 'STATUS') {
     body.status = value.value;
   }
 
-  onUserPatchData(userId, body, {
-    onSuccess: res => {
-      toast(res.body.message)
-    }
-  })
+  patchUser(userId, body, {
+    onSuccess: (res) => {
+      toast(res.body.message);
+    },
+  });
 }
 </script>
 <template>

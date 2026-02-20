@@ -58,7 +58,7 @@ const { signIn } = useAuth()
       <div class="flex flex-col gap-2 mb-20 my-4">
         <p-button @click="signIn('google')"><pi-google-16 /> Masuk dengan Google</p-button>
       </div>
-      <small class="text-center text-gray-50">&copy;2025 Oliviaru, All rights reserved.</small>
+      <small class="text-center text-gray-50">&copy;{{ new Date().getFullYear() }} Oliviaru, All rights reserved.</small>
     </div>
   </div>
 </template>

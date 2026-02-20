@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import IconDashboard from '@privyid/persona-icon/vue/dashboard/20.vue'
 import PiUserGroups20 from '@privyid/persona-icon/vue/user-groups/20.vue'
 import IconMenu from '@privyid/persona-icon/vue/menu-burger/20.vue'
@@ -65,16 +65,6 @@ watch(() => useRoute().path, () => model.value = false)
             </template>
           </p-checkbox>
         </div>
-        <!-- <div class="px-4 hidden lg:block">
-          <p-breadcrumb>
-            <p-breadcrumb-item href="#dashboard">
-              Dashboard
-            </p-breadcrumb-item>
-            <p-breadcrumb-item active="">
-              User Profile
-            </p-breadcrumb-item>
-          </p-breadcrumb>
-        </div> -->
       </div>
       <Profile />
     </div>

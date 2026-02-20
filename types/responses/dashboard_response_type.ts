@@ -1,7 +1,9 @@
-import type { ApiResponseMeta } from "./base_response_type"
+import type { ApiResponse } from './base_response_type';
 
 export interface DashboardInfo {
-  user_count: number
+  userCount: number;
+  classCount: number;
+  activeAccessCount: number;
 }
 
-export type DashboardInfoResponse = ApiResponseMeta<DashboardInfo>
+export type DashboardInfoResponse = ApiResponse<DashboardInfo>;

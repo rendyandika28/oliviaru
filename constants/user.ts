@@ -1,21 +1,4 @@
-export const ROLES = [
-  {
-    text: 'USER',
-    value: 'USER'
-  },
-  {
-    text: 'SUPER ADMIN',
-    value: 'SUPER_ADMIN'
-  },
-]
+import { RoleEnum, UserStatusEnum, enumToSelectOptions } from '~/shared/enums';
 
-export const USER_STATUS = [
-  {
-    text: 'REGISTERED',
-    value: 'REGISTERED'
-  },
-  {
-    text: 'PENDING',
-    value: 'PENDING'
-  },
-]
+export const ROLES = enumToSelectOptions(RoleEnum);
+export const USER_STATUS = enumToSelectOptions(UserStatusEnum);

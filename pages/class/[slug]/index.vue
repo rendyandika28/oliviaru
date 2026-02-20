@@ -10,7 +10,7 @@ const { user, isSuperAdmin } = storeToRefs(useAuthStore());
 const { getBySlug } = useApiClass();
 const { adminPhonenumber } = useRuntimeConfig().public
 const { data } = await getBySlug(route.params.slug as string);
-const classItem = computed(() => data.value?.data) as unknown as Ref<ClassData>;
+const classItem = computed(() => data.value?.data);
 
 const isModalOpen = ref<boolean>(false);
 

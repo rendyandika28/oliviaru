@@ -1,45 +1,41 @@
+import { API_ENDPOINT } from '~/constants/api_endpoint';
+import type { UserData } from '~/types/responses/user_response_type';
 
-import { API_ENDPOINT } from "~/constants/api_endpoint"
-import type { UserData } from "~/types/responses/user_response_type"
-
-interface AuthStorePropeties {
-  user: UserData | null
+interface AuthStoreProperties {
+  user: UserData | null;
 }
 
-
 export const useAuthStore = defineStore('auth', {
-  state: (): AuthStorePropeties => {
-    return {
-      user: null,
-    }
-  },
+  state: (): AuthStoreProperties => ({
+    user: null,
+  }),
   getters: {
     isAuthenticated: (state) => !!state.user,
-    isSuperAdmin: (state) => state.user?.role === 'SUPER_ADMIN'
+    isSuperAdmin: (state) => state.user?.role === 'SUPER_ADMIN',
   },
   actions: {
     setUser(user: UserData | null) {
-      this.user = user
+      this.user = user;
     },
     async checkCredentials(token: string) {
-      const nuxtApp = useNuxtApp()
+      const nuxtApp = useNuxtApp();
       try {
-        const _fetch = useRequestFetch()
-        const { data } = await _fetch<unknown>(API_ENDPOINT.USER.ME, {
+        const _fetch = useRequestFetch();
+        const response = await _fetch<{ data: UserData }>(API_ENDPOINT.USER.ME, {
           headers: {
-            "Authorization": `Bearer ${token}`,
-            "X-Requested-With": "XMLHttpRequest",
+            Authorization: `Bearer ${token}`,
+            'X-Requested-With': 'XMLHttpRequest',
           },
-        })
-        this.setUser(data);
-      } catch (e) {
+        });
+        this.setUser(response.data);
+      } catch (error) {
+        console.warn('[AuthStore] checkCredentials failed:', error);
         this.setUser(null);
         nuxtApp.runWithContext(() => {
-          const sessionToken = useCookie('next-auth.session-token')
-          sessionToken.value = null
-          navigateTo('/auth/login');
-        })
+          const { signOut } = useAuth();
+          signOut({ redirect: true, callbackUrl: '/auth/login' });
+        });
       }
     },
   },
-})
+});
